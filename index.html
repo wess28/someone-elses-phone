@@ -51,6 +51,22 @@ a{color:inherit}
 .card.soon .tag{background:#2d2a26;color:var(--muted)}
 .card.soon h3{color:#cfc7bc}
 .hub-foot{color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:6px 18px;border-top:1px solid var(--line);padding-top:18px}
+.sub{border:1px solid var(--line);border-radius:22px;background:var(--ink-2);padding:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px 28px;align-items:center}
+@media (max-width:760px){.sub{grid-template-columns:1fr}}
+.sub h3{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.05;margin:4px 0 6px;text-wrap:balance}
+.sub p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+.sub form{display:flex;flex-direction:column;gap:8px}
+.sub .row2{display:flex;gap:8px;flex-wrap:wrap}
+.sub input[type=email]{flex:1 1 200px;min-width:0;font:inherit;font-size:16px;color:var(--text);background:var(--ink);border:1px solid var(--line);border-radius:99px;padding:13px 18px}
+.sub input[type=email]:focus{outline:none;border-color:var(--amber)}
+.sub button{flex:none;border:0;border-radius:99px;background:var(--amber);color:#1b140a;font-weight:700;font-size:15px;padding:13px 22px;cursor:pointer}
+.sub button:disabled{opacity:.6;cursor:wait}
+.sub small{color:var(--muted);font-size:12.5px;padding-left:4px}
+.sub .msg{font-size:14px;padding-left:4px;min-height:20px}
+.sub .msg:empty{display:none}
+.sub .msg.ok{color:var(--amber)}
+.sub .msg.err{color:#ff8a7a}
+.sub.done .row2{display:none}
 .hub-nav{display:flex;gap:6px;margin-bottom:-12px}
 .hub-nav a{font-size:14px;font-weight:600;text-decoration:none;color:var(--muted);padding:8px 14px;border-radius:99px;border:1px solid transparent}
 .hub-nav a:hover{color:var(--text)}
@@ -529,6 +545,7 @@ body.bare .island{display:none}
       <p>Every day you walk past people you'll never know. Their phones know them. Pick one up, look around, and work out who they really are.</p>
     </div>
     <div class="cards" id="cards"></div>
+    <div id="subHub"></div>
     <p class="hub-foot"><span>All characters are fictional.</span><span>© 2026 Someone Else's Phone. All rights reserved.</span></p>
   </div>
 </section>
@@ -968,6 +985,8 @@ bernie: {
   }
 }
 };
+
+const NEWSLETTER = { action: "https://app.kit.com/forms/10200508/subscriptions" };   // Kit form; swap this line to move providers
 
 const TEASERS = [
   { id: "bernie" },
@@ -1750,6 +1769,7 @@ function showReveal() {
       <a class="ghostbtn" href="https://wa.me/?text=${encodeURIComponent(text + " " + url)}" target="_blank" rel="noopener">Send on WhatsApp</a>
       <button class="ghostbtn" id="copyLink">Copy link</button><span class="copied" id="copied"></span>
     </div>
+    ${subscribeHTML("reveal", "Want the next phone?", "We'll email you once when the next one is left behind.")}
     <div class="closing"><p class="dim" style="margin-bottom:10px">More phones are being left behind</p><div class="more">${others.map(o => `<div>${esc(o.title)}<small>Coming soon</small></div>`).join("")}</div></div>
     <div class="share"><button class="ghostbtn" id="backPhone">← Back to her phone</button><button class="ghostbtn" id="restart">Start over</button><a class="ghostbtn" href="#">All phones</a></div>
   </div>`;
@@ -1786,9 +1806,38 @@ function startStory(id, fresh) {
   $("#lock").classList.remove("away"); $("#home").classList.add("dim"); $("#app").classList.remove("open"); $("#call").classList.remove("show");
   renderStatus(); renderLock(); renderHome(); buildTracker(); fit(); showIntro();
 }
+function subscribeHTML(key, title, text) {
+  if (!NEWSLETTER || !NEWSLETTER.action) return "";
+  return `<div class="sub" id="sub_${key}"><div><span class="kicker">New phones</span><h3>${esc(title)}</h3><p>${esc(text)}</p></div>
+    <form class="sub-form" data-key="${key}" novalidate>
+      <label for="em_${key}" style="position:absolute;left:-9999px">Email address</label>
+      <div class="row2"><input type="email" id="em_${key}" name="email_address" placeholder="Your email address" autocomplete="email" required><button type="submit">Notify me</button></div>
+      <div class="msg" role="status" aria-live="polite"></div>
+      <small>One email when a new phone is left behind. Unsubscribe any time.</small>
+    </form></div>`;
+}
+async function subscribe(form) {
+  const inp = form.querySelector("input[type=email]"), btn = form.querySelector("button"), msg = form.querySelector(".msg");
+  const email = inp.value.trim();
+  msg.className = "msg"; msg.textContent = "";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.className = "msg err"; msg.textContent = "That email doesn't look right. Check it and try again."; inp.focus(); return; }
+  btn.disabled = true; btn.textContent = "Sending…";
+  const body = () => { const f = new FormData(); f.append("email_address", email); return f; };
+  const done = () => { form.closest(".sub").classList.add("done"); msg.className = "msg ok"; msg.textContent = "Almost there. Check your inbox and confirm your email, then you're on the list."; };
+  try {
+    const r = await fetch(NEWSLETTER.action, { method: "POST", body: body(), headers: { Accept: "application/json" } });
+    if (r.ok) done(); else throw new Error("status " + r.status);
+  } catch (e) {
+    try { await fetch(NEWSLETTER.action, { method: "POST", body: body(), mode: "no-cors" }); done(); }
+    catch (e2) { msg.className = "msg err"; msg.textContent = "Couldn't reach the sign-up service. Check your connection and try again."; btn.disabled = false; btn.textContent = "Notify me"; }
+  }
+}
+document.addEventListener("submit", e => { const f = e.target.closest(".sub-form"); if (!f) return; e.preventDefault(); subscribe(f); });
+
 function showHub() {
   clearInterval(tickTimer); stopRing(); stopAudio(); if (st && st.inCall) endCall(false);
   $("#exp").hidden = true; $("#intro").hidden = true; $("#reveal").hidden = true; $("#hub").hidden = false;
+  $("#subHub").innerHTML = subscribeHTML("hub", "Get the next phone in your inbox", "Three more phones are being written: the neighbour at the bins, the taxi driver at 3am, the student at closing time. Be the first to pick them up.");
   $("#cards").innerHTML = TEASERS.map(t => {
     if (t.soon) return `<div class="card soon"><div class="art" style="background:${t.art}"></div><span class="tag">Coming soon</span><h3>${esc(t.title)}</h3><p>${esc(t.line)}</p></div>`;
     const c = STORIES[t.id].card;
