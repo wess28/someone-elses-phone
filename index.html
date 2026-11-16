@@ -102,6 +102,10 @@ body.bare #exp{grid-template-rows:auto 1fr}
 body.bare .topbar{padding:8px 12px;min-height:46px}
 body.bare .brand{display:none}
 body.bare #stage::before{display:none}
+body.bare #scaler{width:100% !important;height:100% !important}
+body.bare .phone{position:relative;width:100%;height:100%;transform:none !important;padding:0;border-radius:0;box-shadow:none;background:#000}
+body.bare .screen{border-radius:0}
+body.bare .island{display:none}
 .tracker b{white-space:nowrap}
 @media (max-width:760px){.brand{display:none}.tracker{justify-content:flex-start}}
 @media (max-width:560px){.tracker .label,.found-toast{display:none}.putdown{padding:8px 12px;font-size:13px}.dots{gap:3px}.dots i{width:7px;height:7px}.tracker{gap:7px}}
@@ -1704,8 +1708,8 @@ function bindSwipe() {
 function fit() {
   const bare = window.innerWidth < 560;
   document.body.classList.toggle("bare", bare);
-  const pad = bare ? 12 : 28;
-  const r = $("#stage").getBoundingClientRect(), sc = Math.min((r.height - pad) / 868, (r.width - pad) / 414, 1.05);
+  if (bare) { $("#phone").style.transform = ""; $("#scaler").style.width = ""; $("#scaler").style.height = ""; return; }
+  const r = $("#stage").getBoundingClientRect(), sc = Math.min((r.height - 28) / 868, (r.width - 28) / 414, 1.05);
   $("#phone").style.transform = `scale(${sc})`; $("#scaler").style.width = 414 * sc + "px"; $("#scaler").style.height = 868 * sc + "px";
 }
 
