@@ -31,7 +31,7 @@ a{color:inherit}
 [hidden]{display:none !important}
 
 /* ---------- HUB ---------- */
-#hub,#about{height:100%;overflow:auto;padding:40px 20px 64px}
+#hub,#about,#subscribe{height:100%;overflow:auto;padding:40px 20px 64px}
 .hub-in{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
 .hub-head{display:flex;flex-direction:column;gap:14px;max-width:640px}
 .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:600}
@@ -538,7 +538,7 @@ body.bare .island{display:none}
 
 <section id="hub" hidden>
   <div class="hub-in">
-    <nav class="hub-nav" aria-label="Sections"><a href="#" class="on" aria-current="page">Phones</a><a href="#about">About</a></nav>
+    <nav class="hub-nav" aria-label="Sections"><a href="#" class="on" aria-current="page">Phones</a><a href="#about">About</a><a href="#subscribe">Subscribe</a></nav>
     <div class="hub-head">
       <span class="kicker">A series of phones left behind</span>
       <h1>Someone Else's Phone</h1>
@@ -552,7 +552,7 @@ body.bare .island{display:none}
 
 <section id="about" hidden>
   <div class="hub-in">
-    <nav class="hub-nav" aria-label="Sections"><a href="#">Phones</a><a href="#about" class="on" aria-current="page">About</a></nav>
+    <nav class="hub-nav" aria-label="Sections"><a href="#">Phones</a><a href="#about" class="on" aria-current="page">About</a><a href="#subscribe">Subscribe</a></nav>
     <div class="hub-head">
       <span class="kicker">About the project</span>
       <h1>Five minutes in someone else's life</h1>
@@ -582,6 +582,34 @@ body.bare .island{display:none}
         </section>
       </div>
     </div>
+    <p class="hub-foot"><span>All characters are fictional.</span><span>© 2026 Someone Else's Phone. All rights reserved.</span></p>
+  </div>
+</section>
+
+<section id="subscribe" hidden>
+  <div class="hub-in">
+    <nav class="hub-nav" aria-label="Sections"><a href="#">Phones</a><a href="#about">About</a><a href="#subscribe" class="on" aria-current="page">Subscribe</a></nav>
+    <div class="hub-head">
+      <span class="kicker">Subscribe</span>
+      <h1>Be there when the next phone is left behind</h1>
+      <p>New phones don't come out on a schedule. Leave your email and we'll tell you the moment one does.</p>
+    </div>
+    <div id="subPage"></div>
+    <div class="about"><div class="about-main">
+      <section>
+        <h2>What you'll get</h2>
+        <ol class="steps">
+          <li><span><b>One email per new phone.</b> A short note with who left it behind and a link to pick it up.</span></li>
+          <li><span><b>Nothing else.</b> No weekly digest, no adverts, no selling your address.</span></li>
+          <li><span><b>Leave whenever you like.</b> Every email has an unsubscribe link at the bottom.</span></li>
+        </ol>
+      </section>
+      <section>
+        <h2>Coming next</h2>
+        <div class="more" id="subNext"></div>
+      </section>
+      <p class="hub-foot" style="border:0;padding:0"><span>Your email is stored with our newsletter provider, Kit, and is only used to tell you about new phones.</span></p>
+    </div></div>
     <p class="hub-foot"><span>All characters are fictional.</span><span>© 2026 Someone Else's Phone. All rights reserved.</span></p>
   </div>
 </section>
@@ -1835,6 +1863,7 @@ async function subscribe(form) {
 document.addEventListener("submit", e => { const f = e.target.closest(".sub-form"); if (!f) return; e.preventDefault(); subscribe(f); });
 
 function showHub() {
+  $("#about").hidden = true; $("#subscribe").hidden = true;
   clearInterval(tickTimer); stopRing(); stopAudio(); if (st && st.inCall) endCall(false);
   $("#exp").hidden = true; $("#intro").hidden = true; $("#reveal").hidden = true; $("#hub").hidden = false;
   $("#subHub").innerHTML = subscribeHTML("hub", "Get the next phone in your inbox", "Three more phones are being written: the neighbour at the bins, the taxi driver at 3am, the student at closing time. Be the first to pick them up.");
@@ -1847,10 +1876,15 @@ function showHub() {
 function showAbout() {
   showHub(); $("#hub").hidden = true; $("#about").hidden = false; $("#about").scrollTop = 0;
 }
+function showSubscribe() {
+  showHub(); $("#hub").hidden = true; const P = $("#subscribe"); P.hidden = false; P.scrollTop = 0;
+  if (!$("#subPage").innerHTML) $("#subPage").innerHTML = subscribeHTML("page", "Get the next phone in your inbox", "Three more are being written right now.");
+  $("#subNext").innerHTML = TEASERS.filter(t => t.soon).map(o => `<div>${esc(o.title)}<small>${esc(o.line)}</small></div>`).join("");
+}
 function route() {
   const h = location.hash.replace("#", "");
-  $("#about").hidden = true;
-  if (STORIES[h]) startStory(h); else if (h === "about") showAbout(); else showHub();
+  $("#about").hidden = true; $("#subscribe").hidden = true;
+  if (STORIES[h]) startStory(h); else if (h === "about") showAbout(); else if (h === "subscribe") showSubscribe(); else showHub();
 }
 
 $("#screen").addEventListener("click", onClick);
