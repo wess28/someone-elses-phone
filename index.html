@@ -600,7 +600,6 @@ body.bare .island{display:none}
         <h2>What you'll get</h2>
         <ol class="steps">
           <li><span><b>One email per new phone.</b> A short note with who left it behind and a link to pick it up.</span></li>
-          <li><span><b>Nothing else.</b> No weekly digest, no adverts, no selling your address.</span></li>
           <li><span><b>Leave whenever you like.</b> Every email has an unsubscribe link at the bottom.</span></li>
         </ol>
       </section>
@@ -1866,7 +1865,7 @@ function showHub() {
   $("#about").hidden = true; $("#subscribe").hidden = true;
   clearInterval(tickTimer); stopRing(); stopAudio(); if (st && st.inCall) endCall(false);
   $("#exp").hidden = true; $("#intro").hidden = true; $("#reveal").hidden = true; $("#hub").hidden = false;
-  $("#subHub").innerHTML = subscribeHTML("hub", "Get the next phone in your inbox", "Three more phones are being written: the neighbour at the bins, the taxi driver at 3am, the student at closing time. Be the first to pick them up.");
+  $("#subHub").innerHTML = subscribeHTML("hub", "Get the next phone in your inbox", "Be the first to pick up the next one.");
   $("#cards").innerHTML = TEASERS.map(t => {
     if (t.soon) return `<div class="card soon"><div class="art" style="background:${t.art}"></div><span class="tag">Coming soon</span><h3>${esc(t.title)}</h3><p>${esc(t.line)}</p></div>`;
     const c = STORIES[t.id].card;
@@ -1878,7 +1877,7 @@ function showAbout() {
 }
 function showSubscribe() {
   showHub(); $("#hub").hidden = true; const P = $("#subscribe"); P.hidden = false; P.scrollTop = 0;
-  if (!$("#subPage").innerHTML) $("#subPage").innerHTML = subscribeHTML("page", "Get the next phone in your inbox", "Three more are being written right now.");
+  if (!$("#subPage").innerHTML) $("#subPage").innerHTML = subscribeHTML("page", "Get the next phone in your inbox", "Be the first to pick it up.");
   $("#subNext").innerHTML = TEASERS.filter(t => t.soon).map(o => `<div>${esc(o.title)}<small>${esc(o.line)}</small></div>`).join("");
 }
 function route() {
