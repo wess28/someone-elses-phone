@@ -1113,14 +1113,65 @@ function photoURL(id) {
     x.fillStyle = "#222"; for (let i = 0; i < 6; i++) for (let j = 0; j < 5; j++) if (r() > .7) x.fillRect(-80 + i * 22, -40 + j * 20, 20, 18);
     x.restore();
   } else if (p.kind === "scan") {
-    x.fillStyle = "#050505"; x.fillRect(0, 0, W, H);
-    const g = x.createRadialGradient(W / 2, 60, 20, W / 2, 60, 480); g.addColorStop(0, "#777"); g.addColorStop(.6, "#2a2a2a"); g.addColorStop(1, "#000");
-    x.fillStyle = g; x.beginPath(); x.moveTo(W / 2, 60); x.arc(W / 2, 60, 470, Math.PI * .28, Math.PI * .72); x.closePath(); x.fill();
-    x.filter = "blur(8px)"; x.fillStyle = "rgba(220,220,220,.55)";
-    x.beginPath(); x.ellipse(W * .45, 330, 70, 58, -.3, 0, 7); x.fill(); x.beginPath(); x.ellipse(W * .6, 390, 90, 45, .2, 0, 7); x.fill();
-    x.filter = "none"; x.fillStyle = "#000"; x.beginPath(); x.ellipse(W * .45, 335, 40, 30, -.3, 0, 7); x.globalAlpha = .4; x.fill(); x.globalAlpha = 1;
-    x.fillStyle = "#cfcfcf"; x.font = "15px monospace"; x.fillText("20w 0d", 22, 34); x.fillText("GA 20+0", W - 100, 34);
-    x.fillStyle = "#4f7cd6"; x.font = "italic 30px 'Segoe Print','Bradley Hand','Comic Sans MS',cursive"; x.fillText("hi Nana x", 60, H - 60);
+    // 1) the ultrasound image itself, drawn pixel by pixel
+    const SW = 640, SH = 480, sc = document.createElement("canvas"); sc.width = SW; sc.height = SH;
+    const sx = sc.getContext("2d"), im = sx.createImageData(SW, SH), px = im.data;
+    const ax = SW / 2, ay = 40, R = 420, half = 0.74;
+    const sac = { x: 328, y: 262, rx: 152, ry: 92 }, head = { x: 262, y: 246, r: 56 }, body = { x: 364, y: 276, rx: 86, ry: 46, a: .2 };
+    const inEll = (X, Y, e) => { const c = Math.cos(-e.a || 0), s2 = Math.sin(-e.a || 0), u = (X - e.x) * c - (Y - e.y) * s2, v = (X - e.x) * s2 + (Y - e.y) * c; return [(u / e.rx) ** 2 + (v / e.ry) ** 2, u, v]; };
+    const limbs = [{ x: 308, y: 302, rx: 30, ry: 9, a: .75 }, { x: 424, y: 306, rx: 38, ry: 11, a: -.5 }, { x: 446, y: 288, rx: 20, ry: 8, a: .3 }];
+    const G = 24, gw = Math.ceil(SW / G) + 2, gh = Math.ceil(SH / G) + 2, nA = Array.from({ length: gw * gh }, () => r() * 2 - 1), nB = Array.from({ length: gw * gh }, () => r() * 2 - 1);
+    const noise = (arr, X, Y) => { const gx = X / G, gy = Y / G, x0 = Math.floor(gx), y0 = Math.floor(gy), fx = gx - x0, fy = gy - y0, sm = t => t * t * (3 - 2 * t), a = arr[y0 * gw + x0], b2 = arr[y0 * gw + x0 + 1], c = arr[(y0 + 1) * gw + x0], e = arr[(y0 + 1) * gw + x0 + 1]; return (a + (b2 - a) * sm(fx)) + ((c + (e - c) * sm(fx)) - (a + (b2 - a) * sm(fx))) * sm(fy); };
+    const band = (t, c, w) => Math.exp(-(((t - c) / w) ** 2));
+    for (let Y = 0; Y < SH; Y++) for (let X = 0; X < SW; X++) {
+      const k = (Y * SW + X) * 4, dx = X - ax, dy = Y - ay, d = Math.hypot(dx, dy), an = Math.atan2(dx, dy);
+      let v = 0;
+      if (d > 28 && d < R && Math.abs(an) < half) {
+        const depth = d / R, n1 = noise(nA, X, Y), n2 = noise(nB, X, Y);
+        const PX = X + n1 * 12, PY = Y + n2 * 12, FX = X + n1 * 3.5, FY = Y + n2 * 3.5;
+        v = .36 + .12 * n1 + .07 * Math.sin(d * .05 + an * 5 + n2 * 2);
+        const [es, su, sv] = inEll(PX, PY, sac);
+        const fluid = Math.max(0, Math.min(1, (1.0 - es) / .12));
+        v = v * (1 - fluid) + .035 * fluid;
+        v += .3 * band(es, 1.0, .07);
+        if (sv < -10 && es > 1) v += .3 * band(es, 1.35, .25);
+        const hdx = FX - head.x, hdy = FY - head.y, hd = Math.hypot(hdx, hdy) / head.r, ha = Math.atan2(hdy, hdx);
+        const inside = Math.max(0, Math.min(1, (1.02 - hd) / .08));
+        v = v * (1 - inside) + (.16 + .05 * n2) * inside;
+        v += .62 * band(hd, .95, .07) * (.55 + .45 * Math.cos(ha + 1.9));
+        v += .25 * band(Math.abs(hdx), 0, 2.2) * (hd < .85 ? 1 : 0);
+        v += .5 * band(Math.hypot(FX - (head.x + 55), FY - (head.y + 13)), 0, 6) + .35 * band(Math.hypot(FX - (head.x + 49), FY - (head.y + 31)), 0, 5);
+        const [eb, bu, bv] = inEll(FX, FY, body);
+        const inb = Math.max(0, Math.min(1, (1.02 - eb) / .14)) * (hd > 1 ? 1 : 0);
+        v = v * (1 - inb) + (.38 + .08 * n1) * inb;
+        if (bv < 0) v += .55 * band(eb, .74, .07) * (.5 + .5 * Math.sin(bu * .5)) * (hd > 1 ? 1 : 0);
+        for (const L of limbs) { const [el] = inEll(FX, FY, L); v += .45 * Math.max(0, 1 - el) + .25 * band(el, .9, .12); }
+        const edge = Math.min((half - Math.abs(an)) / .05, (R - d) / 12, 1);
+        v *= Math.max(.25, edge) * (.6 + r() * .8) * (1.1 - depth * .55);
+        if (r() > .99) v += .2;
+      }
+      const g8 = Math.max(0, Math.min(255, v * 255));
+      px[k] = g8; px[k + 1] = g8; px[k + 2] = Math.min(255, g8 * 1.04); px[k + 3] = 255;
+    }
+    sx.putImageData(im, 0, 0);
+    sx.filter = "blur(1.3px)"; sx.drawImage(sc, 0, 0); sx.filter = "none";
+    sx.fillStyle = "#d8d8d8"; sx.font = "13px monospace";
+    sx.fillText("BAYSIDE WOMEN'S IMAGING", 14, 20); sx.fillText("OB 2/3 TRIM  20w0d", 14, 38); sx.fillText("EDD 09/03", 14, 56);
+    sx.textAlign = "right"; sx.fillText("C5-1  MI 1.0  TIb 0.4", SW - 14, 20); sx.fillText("Gn 54  FR 28Hz", SW - 14, 38); sx.fillText("D 16.0cm", SW - 14, 56); sx.textAlign = "left";
+    for (let c = 1; c <= 15; c++) { const yy = ay + c * (R / 16); sx.fillStyle = "#bbb"; sx.fillRect(SW - 24, yy, c % 5 ? 3 : 7, 2); if (!(c % 5)) sx.fillText(String(c), SW - 46, yy + 5); }
+    const gb = sx.createLinearGradient(0, 120, 0, 300); gb.addColorStop(0, "#fff"); gb.addColorStop(1, "#000"); sx.fillStyle = gb; sx.fillRect(16, 120, 8, 180);
+    // 2) a phone photo of the printout, on a blanket, with biro underneath
+    x.fillStyle = "#b9ab98"; x.fillRect(0, 0, W, H);
+    x.filter = "blur(18px)"; for (let q = 0; q < 14; q++) { x.fillStyle = `rgba(${r() > .5 ? "255,250,240" : "120,105,90"},${.12 + r() * .12})`; x.beginPath(); x.ellipse(r() * W, r() * H, 60 + r() * 120, 30 + r() * 60, r() * 3, 0, 7); x.fill(); } x.filter = "none";
+    x.save(); x.translate(W / 2 + 6, H / 2 - 6); x.rotate(-.055);
+    x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = 18; x.shadowOffsetY = 6;
+    x.fillStyle = "#f4f2ec"; x.fillRect(-206, -238, 412, 468); x.shadowColor = "transparent";
+    x.drawImage(sc, -196, -228, 392, 294);
+    x.fillStyle = "#2a3f8f"; x.font = "italic 34px 'Segoe Print','Bradley Hand','Comic Sans MS',cursive"; x.fillText("hi Nana x", -150, 140);
+    x.strokeStyle = "#2a3f8f"; x.lineWidth = 2.4; x.beginPath(); x.moveTo(50, 128); x.bezierCurveTo(50, 112, 72, 112, 72, 126); x.bezierCurveTo(72, 112, 94, 112, 94, 128); x.bezierCurveTo(94, 142, 72, 150, 72, 160); x.bezierCurveTo(72, 150, 50, 142, 50, 128); x.stroke();
+    x.fillStyle = "#555"; x.font = "11px monospace"; x.fillText("15/11  09:02", 96, 206);
+    const gl = x.createLinearGradient(-206, -238, 206, 230); gl.addColorStop(0, "rgba(255,255,255,0)"); gl.addColorStop(.45, "rgba(255,255,255,.10)"); gl.addColorStop(.55, "rgba(255,255,255,0)"); x.fillStyle = gl; x.fillRect(-206, -238, 412, 468);
+    x.restore();
   } else if (p.kind === "paint") {
     x.fillStyle = "#f4efe3"; x.fillRect(0, 0, W, H);
     x.fillStyle = "#9cc6e8"; x.fillRect(0, 0, W, 300);
