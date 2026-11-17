@@ -513,6 +513,9 @@ body.bare .island{display:none}
 .ov-in h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,8vw,62px);line-height:1;margin:0;text-wrap:balance}
 .ov-in p{margin:0;font-size:18px;line-height:1.6;color:#d8d0c5}
 .ov-in p.dim{color:var(--muted);font-size:15px}
+.sound-tip{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--ink-2);font-size:14.5px;line-height:1.45;color:#d8d0c5}
+.sound-tip svg{width:22px;height:22px;flex:none;color:var(--amber);margin-top:1px}
+.sound-tip b{color:var(--text)}
 .cta{align-self:flex-start;border:0;border-radius:99px;background:var(--amber);color:#1b140a;font-weight:700;font-size:16px;padding:14px 24px;cursor:pointer;margin-top:6px;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
 .ghostbtn{border:1px solid var(--line);background:transparent;border-radius:99px;padding:12px 20px;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
 .who{font-size:17px;color:var(--amber);font-weight:600;margin-top:-6px !important}
@@ -1766,7 +1769,7 @@ function fit() {
 /* ---------- intro + reveal ---------- */
 function showIntro() {
   const I = S.intro, el = $("#intro");
-  el.innerHTML = `<div class="ov-in"><span class="kicker">${esc(I.kicker)}</span><h1>${esc(I.title)}</h1>${I.paras.map(p => `<p>${esc(p)}</p>`).join("")}<p class="dim">${esc(I.dim)}</p><button class="cta" id="pickup">${esc(I.button)} →</button></div>`;
+  el.innerHTML = `<div class="ov-in"><span class="kicker">${esc(I.kicker)}</span><h1>${esc(I.title)}</h1>${I.paras.map(p => `<p>${esc(p)}</p>`).join("")}<p class="dim">${esc(I.dim)}</p><div class="sound-tip" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span><b>Sound on.</b> Switch off silent mode and turn your volume up. Calls ring and messages buzz while you're holding her phone.</span></div><button class="cta" id="pickup">${esc(I.button)} →</button></div>`;
   el.hidden = false;
   $("#pickup").addEventListener("click", () => {
     try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume(); } catch (e) { actx = null; }
