@@ -679,7 +679,6 @@ bernie: {
       "Then she checked the time, grabbed her coat and was gone. Her phone is still on the table, face down.",
       "The barista says she's in every Tuesday and Thursday. You could just hand it in. Or you could find out who she is."
     ],
-    dim: "Tap and swipe like it's a real phone. Calls and messages may come in while you're holding it.",
     button: "Turn the phone over"
   },
   side: {
@@ -1769,7 +1768,7 @@ function fit() {
 /* ---------- intro + reveal ---------- */
 function showIntro() {
   const I = S.intro, el = $("#intro");
-  el.innerHTML = `<div class="ov-in"><span class="kicker">${esc(I.kicker)}</span><h1>${esc(I.title)}</h1>${I.paras.map(p => `<p>${esc(p)}</p>`).join("")}<p class="dim">${esc(I.dim)}</p><div class="sound-tip" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span><b>Sound on.</b> Switch off silent mode and turn your volume up. Calls ring and messages buzz while you're holding her phone.</span></div><button class="cta" id="pickup">${esc(I.button)} →</button></div>`;
+  el.innerHTML = `<div class="ov-in"><span class="kicker">${esc(I.kicker)}</span><h1>${esc(I.title)}</h1>${I.paras.map(p => `<p>${esc(p)}</p>`).join("")}${I.dim ? `<p class="dim">${esc(I.dim)}</p>` : ""}<div class="sound-tip" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span><b>Sound on.</b> Switch off silent mode and turn your volume up. Calls ring and messages buzz while you're holding her phone.</span></div><button class="cta" id="pickup">${esc(I.button)} →</button></div>`;
   el.hidden = false;
   $("#pickup").addEventListener("click", () => {
     try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume(); } catch (e) { actx = null; }
