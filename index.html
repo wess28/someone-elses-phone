@@ -107,6 +107,10 @@ a{color:inherit}
 .dots i.on{background:var(--amber);border-color:var(--amber);box-shadow:0 0 10px rgba(232,181,108,.6)}
 .found-toast{color:var(--amber);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .5s}
 .found-toast.show{opacity:1}
+.tb-right{display:flex;align-items:center;gap:8px;flex:none}
+.soundbtn{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:transparent;color:inherit;display:grid;place-items:center;cursor:pointer;opacity:.8}
+.soundbtn:hover{opacity:1}.soundbtn svg{width:18px;height:18px}
+body.bare .soundbtn{width:32px;height:32px}body.bare .soundbtn svg{width:16px;height:16px}
 .putdown{flex:none;border:1px solid var(--line);background:transparent;border-radius:99px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .3s}
 .putdown:hover{border-color:#5b544b}
 .putdown.ready{background:var(--amber);color:#1b140a;border-color:var(--amber)}
@@ -131,7 +135,8 @@ body.bare .screen{border-radius:0}
 body.bare .island{display:none}
 .tracker b{white-space:nowrap}
 @media (max-width:760px){.brand .b-full{display:none}.brand .b-short{display:inline}.tracker{justify-content:center}}
-@media (max-width:560px){.tracker .label,.found-toast{display:none}.putdown{padding:8px 12px;font-size:13px}.dots{gap:3px}.dots i{width:7px;height:7px}.tracker{gap:7px}}
+.pd-short{display:none}
+@media (max-width:560px){.pd-long{display:none}.pd-short{display:inline}.tracker .label,.found-toast{display:none}.putdown{padding:8px 11px;font-size:13px}.tb-right{gap:6px}.dots{gap:3px}.dots i{width:7px;height:7px}.tracker{gap:7px}}
 
 /* ---------- PHONE INTERNALS ---------- */
 .layer{position:absolute;inset:0}
@@ -632,7 +637,7 @@ body.bare .island{display:none}
       <b id="trkCount">0 / 7</b>
       <span class="found-toast" id="foundToast"></span>
     </div>
-    <button class="putdown" id="putdown">Put the phone down</button>
+    <div class="tb-right"><button class="soundbtn" id="soundBtn" aria-pressed="true" aria-label="Sound on. Turn sound off" title="Sound"></button><button class="putdown" id="putdown"><span class="pd-long">Put the phone down</span><span class="pd-short">Put it down</span></button></div>
   </header>
   <div id="stage">
     <aside class="side" id="side"></aside>
@@ -1694,7 +1699,7 @@ function buildTracker() {
 }
 function discover(id) {
   if (!id || !S.discoveries[id] || st.found.has(id)) return;
-  st.found.add(id); buildTracker();
+  st.found.add(id); buildTracker(); sfx("found");
   const t = $("#foundToast"); t.textContent = "+ " + S.discoveries[id]; t.classList.add("show");
   clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 3800);
 }
@@ -1729,7 +1734,7 @@ function lockWeather() {
 }
 function unlock(then) {
   if (st.unlocked) { then && then(); return; }
-  st.unlocked = true; $("#lock").classList.add("away"); $("#home").classList.remove("dim");
+  st.unlocked = true; sfx("unlock"); $("#lock").classList.add("away"); $("#home").classList.remove("dim");
   if (then) setTimeout(then, 260);
 }
 
@@ -1762,12 +1767,14 @@ function openApp(app, view, param) {
   unlock();
   if (!st.stack.length || st.stack[0].app !== app) st.stack = [{ app, view: undefined, param: undefined }];
   if (view) st.stack.push({ app, view, param });
+  if (!$("#app").classList.contains("open")) sfx("open");
   renderApp(); $("#app").classList.add("open"); $("#home").classList.add("dim");
 }
-function pushView(view, param) { st.stack.push({ app: st.stack[0].app, view, param }); renderApp(); }
-function back() { if (st.stack.length > 1) { st.stack.pop(); renderApp(); } else goHome(); }
+function pushView(view, param) { sfx("tap"); st.stack.push({ app: st.stack[0].app, view, param }); renderApp(); }
+function back() { if (st.stack.length > 1) { sfx("back"); st.stack.pop(); renderApp(); } else goHome(); }
 function goHome() {
   if (!st.unlocked) { unlock(); return; }
+  if ($("#app").classList.contains("open")) sfx("close");
   st.stack = []; $("#app").classList.remove("open"); $("#home").classList.remove("dim"); stopMusic(); stopRec(false); stopAudio(); renderHome();
 }
 function renderApp(keepScroll) {
@@ -1995,8 +2002,9 @@ function showBanner(n) {
 function buzz() { tone([[880, .07], [0, .05], [1320, .09]], .06); }
 
 /* ---------- audio (WebAudio only; started from the intro click) ---------- */
+let soundOn = true; try { soundOn = localStorage.getItem("sep_sound") !== "off"; } catch (e) {}
 function tone(seq, vol = .08) {
-  if (!actx) return;
+  if (!actx || !soundOn) return;
   try {
     let t = actx.currentTime;
     seq.forEach(([f, d]) => {
@@ -2005,6 +2013,37 @@ function tone(seq, vol = .08) {
     });
   } catch (e) {}
 }
+/* ---------- interface sounds (synthesised, quiet) ---------- */
+let noiseBuf = null;
+function sfx(name) {
+  if (!actx || !soundOn) return;
+  try {
+    const t = actx.currentTime, out = actx.destination;
+    if (!noiseBuf) { const n = actx.sampleRate * .3; noiseBuf = actx.createBuffer(1, n, actx.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; }
+    const click = (at, f, q, len, vol) => { const src = actx.createBufferSource(), bp = actx.createBiquadFilter(), g = actx.createGain(); src.buffer = noiseBuf; bp.type = "bandpass"; bp.frequency.value = f; bp.Q.value = q; g.gain.setValueAtTime(vol, t + at); g.gain.exponentialRampToValueAtTime(.0001, t + at + len); src.connect(bp).connect(g).connect(out); src.start(t + at); src.stop(t + at + len + .02); };
+    const pop = (at, f0, f1, len, vol, type = "sine") => { const o = actx.createOscillator(), g = actx.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t + at); o.frequency.exponentialRampToValueAtTime(f1, t + at + len); g.gain.setValueAtTime(0, t + at); g.gain.linearRampToValueAtTime(vol, t + at + .008); g.gain.exponentialRampToValueAtTime(.0001, t + at + len); o.connect(g).connect(out); o.start(t + at); o.stop(t + at + len + .02); };
+    const swish = (len, f0, f1, vol) => { const src = actx.createBufferSource(), bp = actx.createBiquadFilter(), g = actx.createGain(); src.buffer = noiseBuf; bp.type = "bandpass"; bp.Q.value = 1.2; bp.frequency.setValueAtTime(f0, t); bp.frequency.exponentialRampToValueAtTime(f1, t + len); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + len * .35); g.gain.exponentialRampToValueAtTime(.0001, t + len); src.connect(bp).connect(g).connect(out); src.start(t); src.stop(t + len + .02); };
+    switch (name) {
+      case "open": swish(.22, 700, 2600, .05); pop(0, 320, 620, .09, .05); break;          // app zooms open
+      case "close": swish(.2, 2400, 600, .045); pop(0, 560, 300, .09, .04); break;         // back to the home screen
+      case "unlock": click(0, 2200, 1.4, .03, .22); click(.055, 1500, 1.4, .035, .14); break; // iPhone unlock clack
+      case "tap": click(0, 3200, 2, .018, .12); break;                                     // open a chat, note, photo
+      case "back": click(0, 2600, 2, .018, .09); break;
+      case "key": click(0, 1900, 1.6, .03, .2); break;                                     // keypad press
+      case "swish": swish(.16, 1200, 3400, .035); break;                                   // photo swipe
+      case "found": pop(0, 988, 988, .25, .025); pop(.09, 1480, 1480, .35, .02); break;    // a discovery
+      case "vstart": pop(0, 660, 990, .07, .04); break;
+      case "vend": pop(0, 990, 660, .08, .035); break;
+    }
+  } catch (e) {}
+}
+function setSound(on) {
+  soundOn = on; try { localStorage.setItem("sep_sound", on ? "on" : "off"); } catch (e) {}
+  if (!on) { stopRing(); stopAudio(); }
+  const b = $("#soundBtn"); if (b) { b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Sound on. Turn sound off" : "Sound off. Turn sound on"); b.innerHTML = on ? SOUND_ON : SOUND_OFF; }
+}
+const SOUND_ON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+const SOUND_OFF = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 let ringTimer = null;
 function startRing() { stopRing(); const r = () => tone([[784, .18], [988, .18], [784, .18], [988, .28], [0, .1]], .07); r(); ringTimer = setInterval(r, 2200); }
 function stopRing() { clearInterval(ringTimer); ringTimer = null; }
@@ -2040,7 +2079,23 @@ function playVoice(key, src, idx) {
   const done = () => { if (st.vPlaying === key) st.vPlaying = null; const b = bubble(); if (b) { const btn2 = b.querySelector("[data-act=voice]"); if (btn2) btn2.innerHTML = G.play; } };
   playClip(src, { onTime: paint, onEnd: () => { paint(1); done(); }, onStop: done, onFail: done });
 }
+// voice notes have no recording: the waveform plays through while the transcript shows
+let vTimer = null;
+function playSilentVoice(key, idx, durText) {
+  clearInterval(vTimer);
+  if (st.vPlaying === key) { st.vPlaying = null; sfx("vend"); renderApp(true); return; }
+  st.vPlaying = key; st.voiceOpen.add(key); sfx("vstart"); renderApp(true);
+  const [mm, ss] = String(durText || "0:10").split(":").map(Number), total = Math.max(3, (mm || 0) * 60 + (ss || 0)) * 1000, t0 = Date.now();
+  const paint = f => { const b = document.querySelector(`[data-act="voice"][data-i="${idx}"]`); if (!b) return; b.closest(".b").querySelectorAll(".vbar i").forEach((x, k, all) => x.classList.toggle("p", k < f * all.length)); };
+  paint(0);
+  vTimer = setInterval(() => {
+    if (st.vPlaying !== key) { clearInterval(vTimer); return; }
+    const f = Math.min(1, (Date.now() - t0) / total); paint(f);
+    if (f >= 1) { clearInterval(vTimer); st.vPlaying = null; sfx("vend"); if (isViewing(key.split(":")[0])) renderApp(true); }
+  }, 120);
+}
 function playVoicemail(v, btn) {
+  sfx("vstart");
   if (!v.audio) { const bar = document.getElementById("vmt_" + v.id); if (bar) { bar.style.transition = "none"; bar.style.width = "0"; requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transition = `width ${v.dur}s linear`; bar.style.width = "100%"; })); } return; }
   const bar = document.getElementById("vmt_" + v.id); if (bar) { bar.style.transition = "none"; bar.style.width = "0"; }
   if (st.vmPlaying === v.id) { stopAudio(); return; }
@@ -2149,7 +2204,7 @@ function toggleMusic() {
 
 /* ---------- camera (no real camera: the viewfinder shows a photo from the owner's spot) ---------- */
 function shutterSound() {
-  if (!actx) return;
+  if (!actx || !soundOn) return;
   try {
     const len = actx.sampleRate * .06, buf = actx.createBuffer(1, len, actx.sampleRate), d = buf.getChannelData(0);
     for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
@@ -2199,12 +2254,12 @@ function onClick(e) {
     case "openTo": { const o = JSON.parse(el.dataset.open); $("#banner").classList.remove("show"); unlock(() => openApp(o[0], o[1], o[2])); break; }
     case "back": back(); break;
     case "thread": pushView("thread", id); break;
-    case "voice": { const cid = st.stack[st.stack.length - 1].param, i = +el.dataset.i, m = D.chats.find(x => x.id === cid).messages[i]; const key = cid + ":" + i; if (m.voice.audio) playVoice(key, m.voice.audio, i); else { st.voiceOpen.has(key) ? st.voiceOpen.delete(key) : st.voiceOpen.add(key); renderApp(true); } break; }
+    case "voice": { const cid = st.stack[st.stack.length - 1].param, i = +el.dataset.i, m = D.chats.find(x => x.id === cid).messages[i]; const key = cid + ":" + i; if (m.voice.audio) playVoice(key, m.voice.audio, i); else playSilentVoice(key, i, m.voice.dur); break; }
     case "sendDraft": sendDraft(id); break;
     case "photo": { const top = st.stack[st.stack.length - 1]; if (top.view === "view") { top.param = id; renderApp(); } else pushView("view", id); break; }
     case "note": { const n = D.notes.find(x => x.id === id); if (n.locked && !st.unlockedNotes.has(id)) { st.pin = ""; pushView("lock", id); } else pushView("note", id); break; }
     case "pin": pinPress(el.dataset.k); break;
-    case "tab": { st.stack = [{ app: st.stack[0].app, view: el.dataset.v }]; renderApp(); break; }
+    case "tab": { sfx("tap"); st.stack = [{ app: st.stack[0].app, view: el.dataset.v }]; renderApp(); break; }
     case "vm": { if (e.target.closest("[data-act='vmplay']")) return; st.vmOpen = st.vmOpen === id ? null : id; const v = D.phone.voicemail.find(x => x.id === id); if (st.vmOpen) discover(v.discover); renderApp(true); break; }
     case "vmplay": { const v = D.phone.voicemail.find(x => x.id === id); playVoicemail(v, el); discover(v.discover); break; }
     case "bview": { const top = st.stack[st.stack.length - 1]; if (top.view === el.dataset.v) back(); else pushView(el.dataset.v); break; }
@@ -2226,6 +2281,7 @@ function onClick(e) {
 }
 function pinPress(k) {
   const top = st.stack[st.stack.length - 1], n = D.notes.find(x => x.id === top.param);
+  sfx("key");
   if (k === "del") st.pin = st.pin.slice(0, -1); else if (st.pin.length < 4) st.pin += k;
   renderApp();
   if (st.pin.length === 4) {
@@ -2258,8 +2314,8 @@ function bindHomeBar() {
     if (e.type === "pointercancel" && moved < 8) return;
     // swipe up (or tap): app shrinks away, then home
     A.style.transition = "transform .28s cubic-bezier(.3,.7,.2,1),opacity .24s";
-    A.style.transform = "translateY(-30%) scale(.25)"; A.style.opacity = "0";
-    setTimeout(() => { A.style.transition = "none"; goHome(); A.style.transform = ""; A.style.opacity = ""; A.style.borderRadius = ""; void A.offsetWidth; A.style.transition = ""; }, 260);
+    A.style.transform = "translateY(-30%) scale(.25)"; A.style.opacity = "0"; sfx("close");
+    setTimeout(() => { A.style.transition = "none"; A.classList.remove("open"); goHome(); A.style.transform = ""; A.style.opacity = ""; A.style.borderRadius = ""; void A.offsetWidth; A.style.transition = ""; }, 260);
   };
   hi.addEventListener("pointerup", end); hi.addEventListener("pointercancel", end);
 }
@@ -2288,7 +2344,7 @@ function bindPhotoSwipe() {
     img.style.transform = `translateX(${dir * w}px)`;
     setTimeout(() => {
       const top = st.stack[st.stack.length - 1]; if (!top || top.view !== "view") return;
-      top.param = target; renderApp();
+      top.param = target; renderApp(); sfx("swish");
       const ni = A.querySelector(".viewer .stagep img, .viewer .letter"); if (!ni) return;
       ni.style.transition = "none"; ni.style.transform = `translateX(${-dir * w}px)`; void ni.offsetWidth;
       ni.style.transition = "transform .24s ease-out"; ni.style.transform = "";
@@ -2435,6 +2491,7 @@ function route() {
 $("#screen").addEventListener("click", onClick);
 $("#screen").addEventListener("keydown", e => { if (e.target.id === "clueIn" && e.key === "Enter") { e.preventDefault(); checkClue(); } });
 $("#putdown").addEventListener("click", showReveal);
+$("#soundBtn").addEventListener("click", () => setSound(!soundOn)); setSound(soundOn);
 window.addEventListener("resize", fit);
 window.addEventListener("hashchange", route);
 bindSwipe();
