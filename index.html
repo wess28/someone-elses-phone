@@ -1019,14 +1019,345 @@ bernie: {
     closing: "Everyone at the next table is in the middle of something.",
     share: "I just spent {min} in a stranger's phone and I can't stop thinking about her. ‘The lady across the table’ 📱"
   }
+},
+
+tom: {
+  id: "tom",
+  pronoun: "he",
+  trackerLabel: "Who is he?",
+  card: {
+    title: "The neighbour who works at Tesco",
+    line: "Says hello every morning at the bins. Seventeen years on the tills.",
+    art: "url(img/cover_tom.jpg) center / cover no-repeat, #1b2236"
+  },
+  intro: {
+    kicker: "Laurel Court, Walkinstown",
+    title: "The neighbour who works at Tesco",
+    paras: [
+      "Every morning he's at the bins before you. Tesco fleece, flask of tea, ‘Morning, neighbour!’ You've lived next door for a year and a half. You only know his name from his badge: TOM.",
+      "This morning, for once, you were out first. He said his hello, checked the time and ran for the bus.",
+      "His phone is still on the wall beside the bins. It's buzzing. You could put it through his letterbox. Or you could find out who says good morning to you every day."
+    ],
+    button: "Pick it up"
+  },
+  side: {
+    title: "Whose phone is this?",
+    text: "Read the messages. Check the photos, the notes, the call log. The amber dots fill in as you piece him together."
+  },
+  clock: { realTime: true },
+  battery: 64,
+  wallpaper: {
+    lockPhoto: "t_sopot",
+    home: "radial-gradient(ellipse at 50% 110%, #e9a77c 0%, rgba(233,167,124,0) 45%), linear-gradient(180deg,#101a30 0%,#26365a 50%,#55597a 80%,#8a6a6a 100%)"
+  },
+  discoveries: {
+    ewa:      "Who he texts every night",
+    calls:    "The number he rings at 11pm",
+    you:      "What he's noticed about you",
+    regulars: "The people on his till he looks out for",
+    kasia:    "Why he won't move home",
+    plates:   "The empty plates",
+    search:   "What he googles on his lunch break",
+    plan:     "His plan for Christmas Eve",
+    before:   "Who he was before Tesco"
+  },
+  threshold: 3,
+  dock: ["phone","chats","browser","music"],
+  homeGrid: ["calendar","photos","camera","notes","clock","weather","health","settings"],
+  camera: {
+    view: "t_bins",
+    shot: "You took this. It's in his camera roll now.",
+    front: "Your own face, in his phone. A bit of frost on the lens.",
+    video: "A few seconds of the street. Frost on the cars, a bin lid banging, somebody's engine not starting."
+  },
+  widgets: [
+    { type: "memory", photo: "t_sopot", kicker: "On this day", title: "Sopot, 1991" },
+    { type: "calendar" }
+  ],
+  lockNotifs: [
+    { app: "chats", title: "Shauna · Tesco", body: "Christmas rota is up 👀 We need to talk about Christmas Eve", time: "07:02", open: ["chats","thread","shauna"] },
+    { app: "chats", title: "Kasia 💙", body: "🎤 Voice message (0:21)", time: "Yesterday", open: ["chats","thread","kasia"] },
+    { app: "chats", title: "Laurel Court 🏡", body: "Ahmed: She says thank you Mr Tom 🙏", time: "Saturday", open: ["chats","thread","street"] },
+    { app: "calendar", title: "Calendar", body: "Work · Till 3 · 08:00", time: "Today", open: ["calendar"] },
+    { app: "photos", title: "Photos", body: "On this day: Sopot, 1991", time: "Today", open: ["photos","view","t_sopot"] }
+  ],
+
+  chats: [
+    { id: "ewa", name: "Ewa ❤️", initials: "E", color: "#c0566b", sub: "last seen 14/01/2023", discover: "ewa", messages: [
+      { d: "10/12/2022", from: "them", t: "16:02", text: "Tomek, don't forget the dill 🌿 and the poppy seed. And the hay for under the tablecloth!!" },
+      { d: "10/12/2022", from: "me", t: "16:05", text: "Yes my queen 👑" },
+      { d: "10/12/2022", from: "them", t: "16:06", text: "And smile at the customers. You look like a bear at that till 🐻" },
+      { d: "10/12/2022", from: "me", t: "16:06", text: "I am a bear. A happy bear." },
+      { d: "Wednesday", from: "me", t: "22:51", text: "Ewunia. Kasia says come home again. The flat under hers is free from January. I said my home is where you are. She said Tato, Mama is in the cemetery, not on Laurel Court." },
+      { d: "Wednesday", from: "me", t: "22:53", text: "She is right. But you are also on this street. In the roses you planted. In Bríd's kitchen. In everything." },
+      { d: "Friday", from: "me", t: "22:40", text: "Number 14 said ‘Morning Tom’ today. They know my name! (It is on the badge, okay. Still.)" },
+      { d: "Saturday", from: "me", t: "17:20", text: "I bought 6 chairs. Folding. Don't laugh." },
+      { d: "Sunday", from: "me", t: "21:12", text: "I wrote the message to the street. I didn't send it. If I send and nobody answers, then I know. If I don't send, maybe everybody comes 🙂" },
+      { d: "Yesterday", from: "me", t: "23:00", text: "Rang you. Still your voice. ‘Nie ma mnie, zostaw wiadomość.’ I'm not here, leave a message. I never leave one. You know what I would say." },
+      { d: "Today", from: "me", t: "07:12", text: "Frost on the cars. 14 was out at the bins before me today. First time ever! Looked tired. I said morning neighbour. They smiled. Good start of the day." }
+    ]},
+    { id: "shauna", name: "Shauna · Tesco", initials: "S", color: "#2f6fb0", sub: "Supervisor · online", unread: 1, messages: [
+      { d: "Friday", from: "them", t: "15:10", text: "Christmas rota's going up Monday. Tom. You put yourself down for Christmas Eve AGAIN." },
+      { d: "Friday", from: "me", t: "15:24", text: "Somebody must work." },
+      { d: "Friday", from: "them", t: "15:25", text: "Somebody will. Not you. That's two years running. You're off Christmas Eve, I already changed it 😇" },
+      { d: "Friday", from: "me", t: "15:31", text: "Shauna…" },
+      { d: "Friday", from: "them", t: "15:31", text: "And I still have that video of you singing in aisle 6 at 6am 🎶 Don't make me use it" },
+      { d: "Friday", from: "me", t: "15:32", text: "That is blackmail." },
+      { d: "Friday", from: "them", t: "15:32", text: "That's management 😎" },
+      { d: "Today", from: "them", t: "07:02", text: "Christmas rota is up 👀 We need to talk about Christmas Eve" }
+    ]},
+    { id: "street", name: "Laurel Court 🏡", initials: "🏡", color: "#5f7d4a", group: true,
+      members: { "Bríd (22)": "#e5a663", "Ahmed (9)": "#7fc4e0", "Dave (2)": "#e07fa8", "Ciara (7)": "#b39ddb" }, sub: "Ahmed (9), Bríd (22), Ciara (7), Dave (2), You",
+      draftNote: "Unsent draft. He wrote this on Sunday night and never pressed send.",
+      draft: "Hello neighbours 🙂 In Poland on Christmas Eve we always set one extra plate at the table, for anyone who has nowhere to be. This year I will set a lot of extra plates. No. 16, 24th December, from 6pm, when the first star comes out. Nobody needs to bring anything. Everybody is welcome, even if we never talked. — Tom (from Tesco)",
+      afterSend: [
+        { wait: 3200, from: "Bríd (22)", text: "Tom that is the loveliest thing I've read all year. I'll be there. I'm bringing a trifle and you'll eat it." },
+        { wait: 2600, from: "Ahmed (9)", text: "We would be honoured. The children have never seen a Polish Christmas. Rana will cook something too 🙏" },
+        { wait: 2400, from: "Dave (2)", text: "Is there drink 😂 joking. We're in. The lads will behave. Probably." },
+        { wait: 2600, from: "Ciara (7)", text: "Wait is this TESCO TOM?? Yes!! Count me in x" },
+        { wait: 3000, from: "Bríd (22)", text: "Who's in 14? Somebody tell 14." }
+      ],
+      messages: [
+      { d: "05/03/2024", from: "sys", text: "Tom created the group ‘Laurel Court 🏡’" },
+      { d: "05/03/2024", from: "me", t: "19:02", text: "Hello neighbours! This group is for our street. Bin days, parcels, anything. Tom (No. 16) 🙂" },
+      { d: "05/03/2024", from: "Dave (2)", t: "19:40", text: "👍" },
+      { d: "06/03/2024", from: "sys", text: "+353 86 ••• ••• left" },
+      { d: "12/09/2025", from: "Ciara (7)", t: "08:14", text: "Whose van is across my drive" },
+      { d: "12/09/2025", from: "me", t: "08:20", text: "Sorry, it's the plumber for No. 22. I'll tell him to move 🙂" },
+      { d: "Saturday", from: "Ahmed (9)", t: "11:05", text: "Has anyone seen a grey cat? My daughter feeds him and now he is gone 😟" },
+      { d: "Saturday", from: "me", t: "11:09", text: "He's asleep on my shed. Every day. He is fine. Tell your daughter he is called Pan Kot 🙂 (Mr Cat)" },
+      { d: "Saturday", from: "me", t: "11:09", photo: "t_cat" },
+      { d: "Saturday", from: "Ahmed (9)", t: "11:15", text: "She says thank you Mr Tom 🙏" }
+    ]},
+    { id: "kasia", name: "Kasia 💙", initials: "K", color: "#3d7bd1", sub: "Gdańsk · last seen yesterday at 21:40", discover: "kasia", messages: [
+      { d: "Sunday", from: "them", t: "19:30", text: "Tato, did you think about it? The flat under ours is free from January. Zosia could see you every day." },
+      { d: "Sunday", from: "me", t: "19:41", text: "I thought about it." },
+      { d: "Sunday", from: "them", t: "19:41", text: "And?" },
+      { d: "Sunday", from: "me", t: "19:44", text: "Who will do Mrs Doyle's bins?" },
+      { d: "Sunday", from: "them", t: "19:45", text: "TATO. Somebody in Ireland can do the bins. You don't have to save the whole street." },
+      { d: "Sunday", from: "me", t: "19:46", text: "Not the whole street. Only some houses 🙂" },
+      { d: "Sunday", from: "them", t: "19:52", text: "Since Mama, every Christmas Eve you either work or you sit in that house on your own. I worry about you." },
+      { d: "Sunday", from: "me", t: "19:58", text: "This year will be different. I have a plan." },
+      { d: "Sunday", from: "them", t: "19:58", text: "What plan??" },
+      { d: "Sunday", from: "me", t: "19:59", text: "Secret plan. Polish plan." },
+      { d: "Sunday", from: "them", t: "20:01", text: "Oh no 😂 Mama would be proud. Or worried. Both." },
+      { d: "Sunday", from: "them", t: "20:03", photo: "t_kasia" },
+      { d: "Yesterday", from: "them", t: "21:40", voice: { dur: "0:21", transcript: "[a small girl] Dziadek! Dziadek! Sing the low song! The bear song! [Kasia] She means Silent Night, Tato. She wants you to sing it on the video call at the weekend. The bass part. Like you used to. Love you." } },
+      { d: "Yesterday", from: "me", t: "22:10", text: "For Zosia I will sing anything 🐻" }
+    ]},
+    { id: "bridie", name: "Bríd Doyle (22)", initials: "BD", color: "#a0764e", sub: "last seen today at 06:50", messages: [
+      { d: "Thursday", from: "them", t: "18:02", text: "Tom thank you for the soup. You shouldn't have. The pot is on your step." },
+      { d: "Thursday", from: "me", t: "18:30", text: "It was too much soup for one bear 🙂 Bins tomorrow, I'll do yours." },
+      { d: "Thursday", from: "them", t: "18:31", text: "I can do my own bins Tom." },
+      { d: "Thursday", from: "them", t: "18:31", text: "But thank you." },
+      { d: "Today", from: "them", t: "06:50", text: "Mind the ice on the path this morning!" }
+    ]}
+  ],
+
+  phone: {
+    discover: "calls",
+    recents: [
+      { name: "Ewa ❤️", kind: "Outgoing · 23:00", when: "Yesterday", dur: "0:07" },
+      { name: "Kasia 💙", kind: "Incoming", when: "Yesterday", dur: "34 min" },
+      { name: "Ewa ❤️", kind: "Outgoing · 23:00", when: "Sunday", dur: "0:07" },
+      { name: "Ewa ❤️", kind: "Outgoing · 23:01", when: "Saturday", dur: "0:07" },
+      { name: "Bríd Doyle (22)", kind: "Incoming", when: "Saturday", dur: "2 min" },
+      { name: "Ewa ❤️", kind: "Outgoing · 23:00", when: "Friday", dur: "0:07" },
+      { name: "Shauna · Tesco", kind: "Incoming", when: "Friday", dur: "1 min" },
+      { name: "Ewa ❤️", kind: "Outgoing · 23:00", when: "Thursday", dur: "0:07" },
+      { name: "Ewa ❤️", kind: "Outgoing · 23:00", when: "Wednesday", dur: "0:07" }
+    ],
+    voicemail: [
+      { id: "vm_shauna", from: "Shauna · Tesco", when: "Friday", dur: 18, durText: "0:18",
+        transcript: "Tom, it's Shauna. Don't argue with me about the rota, I can hear you arguing already. You're off Christmas Eve. Go home and have your Polish dinner. Bye. Bye bye." },
+      { id: "vm_bridie", from: "Bríd Doyle (22)", when: "Saturday", dur: 14, durText: "0:14",
+        transcript: "Tom, it's Bríd. Your cat, or whoever's cat it is, is in my kitchen again. He's grand. I gave him a bit of ham. Don't tell anyone." }
+    ]
+  },
+
+  photos: [
+    { id: "t_bins", kind: "bins", date: "Today, 07:09", caption: "Frost on the bins. Took this for Kasia, she says Dublin has no winter." },
+    { id: "t_cat", kind: "cat", date: "Saturday", caption: "Pan Kot on my shed again. Belongs to No. 11 (I think). Belongs to the street (I know)." },
+    { id: "t_chairs", kind: "chairs", date: "Saturday", caption: "Six chairs from IKEA. Fourteen seats now. Ewa always said a table should be too big, never too small." },
+    { id: "t_receipt", kind: "receipt", date: "Thursday", discover: "regulars", caption: "€11.40. Her card said no. I told her the machine was acting up. Best €11.40 I spent this year." },
+    { id: "t_kasia", kind: "people", date: "Sunday", pal: ["#f3d9b1", "#d7a17a", "#3a2f3a"], n: 2, caption: "Kasia and Zosia in Gdańsk. Zosia is 4. She wants to know why Dziadek lives in the shop." },
+    { id: "t_table", kind: "table", date: "24 December 2023", discover: "plates", caption: "Wigilia 2023. My first without her. I set her place, and the one for the stranger, like always. Nobody came. Two empty plates." },
+    { id: "t_arrive", kind: "airport", date: "11 March 2008", caption: "Dublin Airport, 11 March 2008. Ewa said: two years, then home. That was eighteen years ago." },
+    { id: "t_cranes", kind: "cranes", date: "February 2008", caption: "The shipyard cranes, the night before we left Gdańsk. Ewa cried. I pretended I had something in my eye." },
+    { id: "t_sopot", kind: "sea", date: "July 1991", pal: ["#b47e52", "#e0c08f", "#2d4f63"], sepia: true, caption: "Sopot pier, July 1991. Ewa in the yellow dress. I asked her to marry me and she said yes before I finished the sentence." }
+  ],
+
+  hiddenAlbum: {
+    clue: "What Ewa always called him (5)",
+    answer: "TOMEK",
+    hint: "Read her messages",
+    wrong: "Not quite. Look at what Ewa calls him.",
+    items: [
+      { id: "t_stage", kind: "stage", date: "1999", discover: "before", caption: "Opera Bałtycka, Gdańsk, 1999. Nabucco. Third from the left in the back row. Ewa said I was the best bass in the north of Poland." },
+      { id: "t_aisle", kind: "aisle", date: "Last Tuesday, 06:04", vdur: "0:48", discover: "before", caption: "Shauna filmed this. Me singing Silent Night in aisle 6, before opening. She wants to put it on the staff Facebook. Absolutely not." }
+    ]
+  },
+
+  health: {
+    steps: "16,204", distance: "11.4 km", sleep: "6h 20m", sleepAvg: "6h 35m", late: [8, 17],
+    night: [0, 0, 0, 0, 0, 0, 120, 640, 980, 1120, 1310, 990, 760, 1180, 1240, 1060, 1210, 830, 160, 90, 40, 0, 0, 30],
+    labels: ["00","","02","","04","","06","","08","","10","","12","","14","","16","","18","","20","","22",""],
+    highlight: "On work days you're on your feet for around 9 hours. You've walked further this year than any year since you got this phone.",
+    sleepNote: "You go to bed at around 23:05 almost every night."
+  },
+
+  lostMode: {
+    title: "This iPhone has been lost",
+    body: "Please put it through the letterbox of No. 16 Laurel Court. Thank you, neighbour. — Tom"
+  },
+
+  notes: [
+    { id: "n_street", pinned: true, title: "The street", date: "Sunday", discover: "you",
+      body: "No. 2 – Dave and the boys. Football through my hedge every Saturday. Don't mind.\n\nNo. 5 – empty since the summer. Post piling up. Told the council.\n\nNo. 9 – Ahmed, Rana and the two little ones. First Christmas in Ireland. The girl is shy, waves from the window. She feeds Pan Kot.\n\nNo. 11 – grey cat lives here (I think).\n\nNo. 14 – moved in last May. Don't know their name yet. Leaves early, home late, always on the phone. Kitchen light on at 2am a lot. Puts the bins out on the wrong day, I bring them in. Ewa would say: leave them something. Left apples on the door handle in October. No idea if they knew it was me.\n\nNo. 22 – Bríd Doyle. 84. On her own since Paddy. I do her bins. She pretends she can.\n\nNo. 16 – me 🙂" },
+    { id: "n_plan", pinned: true, locked: true, code: "1103", hint: "the day we landed in Dublin (DDMM)", title: "Wigilia", date: "Sunday, 21:05", discover: "plan",
+      body: "Plates:\n1 for me\n1 for Ewa. Always.\n1 for the stranger. Always.\n\nBríd (22) – Christmas alone since Paddy. She will say no. Ask twice.\nAhmed, Rana + 2 (9) – first Christmas here. Make it a good one.\nDave + boys (2) – the boys will eat 40 pierogi. Make 80.\nCiara (7) – her mother is in hospital. Maybe she wants company, maybe not. Ask anyway.\nNo. 14 – I don't know their name. Last Christmas the light was on all day and no car came. I think they were on their own too.\n\n= 14 seats. Ewa had 8 chairs. I bought 6 more.\n\n12 dishes. Hay under the tablecloth. Wait for the first star.\n\nIf nobody comes I will eat pierogi until February.\nIf nobody comes it is still better than not asking.\nI think." },
+    { id: "n_regulars", title: "Regulars (till 3)", date: "Thursday", discover: "regulars",
+      body: "Mrs Byrne – 9:10, two Brennans, the Irish Times. Asks about my knee. I ask about her hip. We are a good team.\n\nNight nurse from James's – 7am, energy drink and a banana. Always says sorry for looking wrecked. Give her the good bag.\n\nLady with the twins – Thursdays. Card declined last week, €11.40 short. Put it through on mine. Told her the machine was acting up. Do NOT tell Shauna.\n\nLeaving Cert lad – meal deal, counts his coins. Tell him about the reduced shelf at 4.\n\nOld man with the cap – one tin of soup every day, so he has a reason to come out. Talk to him longer. The queue can wait one minute." },
+    { id: "n_shop", title: "Shopping – Wigilia", date: "Saturday",
+      body: "carp (order from the fishmonger)\nbeetroot for barszcz\nmushrooms – dried, Polish shop\npoppy seed\ndill (koperek!) – for Ewa\nhay for under the tablecloth (pet shop?)\nopłatek – Kasia is posting\ncandles\n6 chairs ✓" },
+    { id: "n_bass", title: "Low notes", date: "2 March 2025",
+      body: "Still have the low D. Not every morning.\nAisle 6 has the best echo in the shop.\nThe freezers hum in B flat. Ewa would laugh." }
+  ],
+
+  calendar: {
+    month: "November",
+    days: [
+      { offset: 0, today: true, events: [
+        { t: "08:00", title: "Work · Till 3", note: "until 17:00", c: "#0a84ff" },
+        { t: "17:30", title: "Bríd – drop in the soup pot", c: "#ff9f0a" } ]},
+      { offset: 1, events: [
+        { t: "07:10", title: "Bins – mine, 22's (and 14's 🙂)", c: "#30d158" },
+        { t: "08:00", title: "Work · Till 3", note: "until 17:00", c: "#0a84ff" } ]},
+      { offset: 4, events: [
+        { t: "19:00", title: "Video call – Kasia & Zosia", note: "Sing the low song", c: "#3d7bd1" } ]},
+      { label: "24 December", events: [
+        { t: "18:00", title: "Wigilia ⭐", note: "First star. Extra plates.", c: "#e8b56c" } ]},
+      { label: "14 January", events: [
+        { t: "All day", title: "Ewa ❤️ · 4 years", c: "#c0566b" } ]},
+      { label: "11 March", events: [
+        { t: "All day", title: "Landed in Dublin, 2008 🇮🇪", c: "#30d158" } ]}
+    ]
+  },
+
+  browser: {
+    discover: "search",
+    current: "b_q",
+    tabs: [
+      { id: "b_q", title: "is it weird to invite neighbours you never really talked to", url: "is it weird to invite neighbours you never really talked to", type: "search",
+        q: "is it weird to invite neighbours you never really talked to",
+        results: [
+          { src: "Community forum · thread", title: "‘I put a note through twelve doors. Nine people came.’", snip: "Most people on a street are waiting for somebody else to go first. Be the one who goes first…" },
+          { src: "Advice column", title: "Inviting neighbours you barely know", snip: "Keep it simple: a time, a place, and no pressure to bring anything. People like being asked more than they admit…" },
+          { src: "Q&A", title: "What if nobody comes?", snip: "Then you've lost an evening and some food. If you don't ask, you lose the chance completely…" }
+        ]},
+      { id: "b_wig", title: "Wigilia: Polish Christmas Eve, explained", url: "Wigilia: Polish Christmas Eve, explained", type: "article",
+        h: "Wigilia: Polish Christmas Eve, explained",
+        paras: ["The meal starts when the first star appears in the sky. Children watch at the window for it.", "There are twelve meatless dishes, and a little hay under the white tablecloth.", "One extra place is always set: for the traveller, for anyone who knocks at the door, or for someone who can't be there."] },
+      { id: "b_pier", title: "pierogi for 14 people how many", url: "pierogi for 14 people how many", type: "search",
+        q: "pierogi for 14 people how many",
+        results: [
+          { src: "Recipe site", title: "How many pierogi per person?", snip: "Plan on 6 to 8 per adult as a main. Teenagers: more. Always make extra…" }
+        ]}
+    ],
+    history: [
+      { d: "Yesterday", t: "23:06", q: "how long does a phone company keep a number if you keep paying" },
+      { d: "Yesterday", t: "12:44", q: "what if nobody comes" },
+      { d: "Yesterday", t: "12:40", q: "is it weird to invite neighbours you never really talked to" },
+      { d: "Yesterday", t: "12:35", q: "pierogi for 14 people how many" },
+      { d: "Sunday", t: "20:12", q: "do irish people come if you invite them or just say they will" },
+      { d: "Sunday", t: "20:02", q: "wigilia explained in english" },
+      { d: "Saturday", t: "16:30", q: "ikea folding chairs 6 pack" },
+      { d: "Thursday", t: "12:38", q: "community choir dublin bass over 60" },
+      { d: "October", t: "", q: "is it strange to leave apples for a neighbour" }
+    ]
+  },
+
+  music: {
+    playlist: "Low notes",
+    desc: "Songs I can still sing the bass line of.",
+    tracks: [
+      { t: "Va, pensiero (Nabucco)", a: "Verdi · opera chorus", plays: 301, note: "we sang this in 1999" },
+      { t: "Cicha noc (Silent Night)", a: "traditional", plays: 188 },
+      { t: "Lulajże, Jezuniu", a: "traditional Polish carol", plays: 140 },
+      { t: "The Parting Glass", a: "traditional", plays: 77, note: "Shauna taught me" },
+      { t: "Danny Boy", a: "traditional", plays: 64, note: "for Bríd" }
+    ],
+    cover: "linear-gradient(135deg,#2a1f3a,#7a3b3b 60%,#e8b56c)"
+  },
+
+  weather: [
+    { city: "Dublin", sub: "My Location", temp: "3°", cond: "Frost, then sun", hl: "H:8° L:-1°", bg: "linear-gradient(160deg,#5d7896,#2b3a52)" },
+    { city: "Gdańsk", sub: "Kasia", tz: "Europe/Warsaw", temp: "-2°", cond: "Light snow", hl: "H:1° L:-5°", bg: "linear-gradient(160deg,#7c8aa0,#3a4456)" }
+  ],
+
+  worldClock: [ { city: "Dublin", tz: "Europe/Dublin" }, { city: "Gdańsk", tz: "Europe/Warsaw" } ],
+  alarms: [
+    { t: "06:40", label: "Work", on: true },
+    { t: "07:05", label: "Bins · mine + Bríd's", on: true },
+    { t: "23:00", label: "Ewa", on: true },
+    { t: "05:30", label: "Opera rehearsal", on: false }
+  ],
+
+  settings: {
+    name: "Tomasz Wójcik", initials: "TW", color: "#3d6b8a", device: "Tom's iPhone", wifi: "Laurel16",
+    screenTime: { avg: "1h 08m", change: "about the same as last week", hiFrom: 99, bars: [62,70,58,66,74,81,60], note: "Most used: Chats 31m · Browser 14m · Phone 9m, mostly 12:30 to 13:00 (lunch break) and around 23:00" }
+  },
+
+  events: [
+    { at: 22, type: "message", chat: "shauna", text: "Morning Tom! Mrs Byrne is already asking for you 😂" },
+    { at: 60, type: "message", chat: "kasia", text: "Tato, Zosia wants to know if Pan Kot is invited to Wigilia too 🐈" },
+    { at: 90, type: "call", name: "Kasia 💙", sub: "mobile · Gdańsk", speaker: "Kasia", captions: [
+        "Tato?",
+        "Tato, are you on the bus? I can hear birds.",
+        "Hello? Is this a bad line?",
+        "Okay. I'll ring you on your break. Kocham cię. Bye, bye."
+      ]},
+    { at: 150, type: "message", chat: "shauna", text: "Tom you're on in 5 and you're not answering. You're NEVER late. You alright?" },
+    { at: 175, type: "message", chat: "shauna", text: "Ah grand, you're here. You left your phone at home didn't you 😂 Classic" },
+    { at: 210, type: "message", chat: "street", from: "Ahmed (9)", text: "Good morning neighbours. Pan Kot has a collar now 🙂 My daughter says it's his Christmas present" },
+    { at: 230, type: "battery", value: 61 },
+    { at: 240, minFound: 3, latest: 420, type: "call", name: "Shauna · Tesco", speaker: "Tom", sub: "mobile", after: "lostMode", captions: [
+        "Hello? Hello, sorry. It's Tom. Tom from sixteen.",
+        "I think I left my phone on the wall by the bins this morning.",
+        "Is that… is that number fourteen? I think it's you. You were out early today.",
+        "If you don't mind, put it through my letterbox. No hurry.",
+        "Thank you, neighbour. Have a good day."
+      ],
+      voicemail: { id: "vm_tom", from: "Shauna · Tesco", dur: 16, durText: "0:16", note: "New",
+        transcript: "Hello, it's Tom, from number sixteen. I left my phone on the wall by the bins. If you found it, maybe put it through my letterbox? Thank you, neighbour." } }
+  ],
+
+  reveal: {
+    kicker: "The neighbour who works at Tesco",
+    title: "Tom",
+    who: "Tomasz Wójcik, 61. No. 16, Laurel Court.",
+    paras: [
+      "To you he was the man at the bins. Tesco fleece, flask of tea, ‘Morning, neighbour!’",
+      "He came to Dublin from Gdańsk in 2008 for two years, and never left. He has been on till 3 longer than most of his customers have lived on their street.",
+      "Ewa died almost four years ago. He still texts her every night. At eleven o'clock he rings her number, just to hear her say she isn't there.",
+      "He knows everyone on the street: who's on their own, who's new, whose cat sleeps on whose shed. He knows you too. The kitchen light at 2am. The bins out on the wrong day. The apples on your door handle in October."
+    ],
+    letterKey: "before",
+    letterLine: "And at six in the morning, before the shop opens, he still sings.",
+    returnLine: "He's asked you to put it through his letterbox.",
+    endingUnsent: "He hasn't sent the invitation yet. There's a plate at No. 16 for you anyway. He just doesn't know your name.",
+    endingSent: "You pressed send for him. In real life that's his to send. In this version, Bríd is making a trifle, and somebody is going to tell number 14.",
+    share: "I just spent {min} in my neighbour's phone. I'm never walking past the man at the bins again. ‘The neighbour who works at Tesco’ 📱"
+  }
 }
 };
+
 
 const NEWSLETTER = { action: "https://app.kit.com/forms/10200508/subscriptions" };   // Kit form; swap this line to move providers
 
 const TEASERS = [
   { id: "bernie" },
-  { soon: true, title: "The neighbour who works at Tesco", line: "Says hello every morning at the bins. Seventeen years on the tills.", art: "radial-gradient(circle at 30% 25%, #6fb1d6 0%, rgba(111,177,214,0) 40%), linear-gradient(160deg,#1e3a52,#11161c 70%)" },
+  { id: "tom" },
   { soon: true, title: "The taxi driver at 3am", line: "Radio off. Never asks where you've been.", art: "radial-gradient(circle at 75% 35%, #f5d76e 0%, rgba(245,215,110,0) 35%), linear-gradient(160deg,#3a3420,#121110 70%)" },
   { soon: true, title: "The student in the library at closing", line: "Always the last one out. Same hoodie all week.", art: "radial-gradient(circle at 40% 30%, #9fd39b 0%, rgba(159,211,155,0) 38%), linear-gradient(160deg,#1f3a2b,#0f1411 70%)" }
 ];
@@ -1039,6 +1370,7 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt
 const nl = s => esc(s).replace(/\n/g, "<br>");
 
 let S = null;        // the story definition
+const PR = () => S && S.pronoun === "he" ? { sub: "he", Sub: "He", obj: "him", pos: "his", Pos: "His" } : { sub: "she", Sub: "She", obj: "her", pos: "her", Pos: "Her" };
 let D = null;        // mutable copy for this session
 let st = null;       // runtime state
 let tickTimer = null;
@@ -1214,6 +1546,105 @@ function photoURL(id) {
       x.fillStyle = "#222"; x.font = "bold 22px Arial"; x.fillText(a, 34, y + 44); x.font = "18px Arial"; x.fillStyle = "#666"; x.fillText(b, 34, y + 78);
       x.fillStyle = "#0b3954"; x.font = "bold 28px Arial"; x.fillText(pr, W - 150, y + 62);
     });
+  } else if (p.kind === "bins") { // dawn street, frost, wheelie bins in front of a low wall
+    x.fillStyle = lg(0, H * .6, ["#16223d", "#3f4f78", "#c98d78", "#f0b98a"]); x.fillRect(0, 0, W, H);
+    x.filter = "blur(24px)"; x.fillStyle = "rgba(255,214,160,.55)"; x.beginPath(); x.arc(W * .72, H * .5, 70, 0, 7); x.fill(); x.filter = "none";
+    x.fillStyle = "#151925"; x.beginPath(); x.moveTo(0, H * .36);
+    for (let i = 0; i <= 4; i++) { const bx = i * W / 4; x.lineTo(bx + 10, H * .36); x.lineTo(bx + W / 8, H * .27); x.lineTo(bx + W / 4 - 10, H * .36); }
+    x.lineTo(W, H * .74); x.lineTo(0, H * .74); x.fill();
+    x.fillStyle = "#2a2d38"; for (let i = 0; i < 5; i++) x.fillRect(i * W / 4 + W / 8 - 7, H * .24, 14, 26);
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 2; j++) { const lit = r() > .55; x.fillStyle = lit ? "#f3c27a" : "#262a36"; x.fillRect(i * W / 4 + 22 + j * 52, H * .42, 34, 40); x.fillRect(i * W / 4 + 22 + j * 52, H * .56, 34, 40); }
+    x.fillStyle = "#3a3c44"; x.fillRect(0, H * .66, W, H * .1);
+    const bin = (bx, col, lid) => { x.fillStyle = col; x.beginPath(); x.moveTo(bx, H * .5); x.lineTo(bx + 96, H * .5); x.lineTo(bx + 88, H * .73); x.lineTo(bx + 8, H * .73); x.fill(); x.fillStyle = lid; x.fillRect(bx - 6, H * .48, 108, 18); x.fillStyle = "rgba(255,255,255,.75)"; for (let k = 0; k < 40; k++) x.fillRect(bx - 4 + r() * 104, H * .48 + r() * 6, 2, 2); x.fillStyle = "#111"; x.beginPath(); x.arc(bx + 18, H * .74, 10, 0, 7); x.arc(bx + 78, H * .74, 10, 0, 7); x.fill(); };
+    bin(70, "#2f5d3a", "#264d30"); bin(196, "#5b4330", "#4a3626"); bin(322, "#2b2e33", "#22252a");
+    x.fillStyle = "#6e665f"; x.fillRect(0, H * .76, W, H * .24);
+    x.strokeStyle = "rgba(0,0,0,.25)"; x.lineWidth = 2; for (let row = 0; row < 6; row++) { const y = H * .76 + row * 24; x.beginPath(); x.moveTo(0, y); x.lineTo(W, y); x.stroke(); for (let c2 = (row % 2) * 30; c2 < W; c2 += 60) { x.beginPath(); x.moveTo(c2, y); x.lineTo(c2, y + 24); x.stroke(); } }
+    x.fillStyle = "#857c73"; x.fillRect(0, H * .76 - 8, W, 14); x.fillStyle = "rgba(255,255,255,.7)"; for (let k = 0; k < 160; k++) x.fillRect(r() * W, H * .76 - 8 + r() * 6, 2, 1.5);
+    if (p.phone) { x.save(); x.translate(W * .58, H * .76 - 10); x.rotate(-.12); x.shadowColor = "rgba(255,200,140,.8)"; x.shadowBlur = 30; x.fillStyle = "#0d0d10"; x.fillRect(-34, -9, 68, 12); x.shadowBlur = 0; x.fillStyle = "#ffe0b0"; x.fillRect(-30, -8, 60, 6); x.restore(); }
+    x.filter = "blur(1px)"; x.drawImage(c, 0, 0); x.filter = "none";
+  } else if (p.kind === "cat") { // grey cat asleep on a shed roof
+    x.fillStyle = lg(0, H, ["#d9e1e6", "#a6b3bb"]); x.fillRect(0, 0, W, H);
+    x.filter = "blur(20px)"; x.fillStyle = "#6f8a5e"; x.beginPath(); x.ellipse(120, 120, 160, 90, 0, 0, 7); x.fill(); x.fillStyle = "#86a070"; x.beginPath(); x.ellipse(400, 80, 140, 80, 0, 0, 7); x.fill(); x.filter = "none";
+    x.save(); x.translate(0, 260); x.rotate(-.06); x.fillStyle = "#6b5440"; x.fillRect(-20, 0, W + 60, 400);
+    x.strokeStyle = "rgba(0,0,0,.3)"; x.lineWidth = 3; for (let y = 0; y < 400; y += 34) { x.beginPath(); x.moveTo(-20, y); x.lineTo(W + 40, y); x.stroke(); }
+    x.restore();
+    x.fillStyle = "rgba(0,0,0,.25)"; x.filter = "blur(10px)"; x.beginPath(); x.ellipse(250, 412, 130, 30, 0, 0, 7); x.fill(); x.filter = "none";
+    x.fillStyle = "#8b8f95"; x.beginPath(); x.ellipse(250, 370, 120, 62, -.05, 0, 7); x.fill();
+    x.beginPath(); x.moveTo(140, 390); x.quadraticCurveTo(80, 420, 150, 432); x.quadraticCurveTo(230, 440, 300, 425); x.lineWidth = 22; x.strokeStyle = "#7d8187"; x.lineCap = "round"; x.stroke();
+    x.fillStyle = "#8b8f95"; x.beginPath(); x.arc(350, 345, 48, 0, 7); x.fill();
+    x.beginPath(); x.moveTo(318, 316); x.lineTo(326, 272); x.lineTo(348, 304); x.fill(); x.beginPath(); x.moveTo(358, 302); x.lineTo(384, 270); x.lineTo(388, 316); x.fill();
+    x.strokeStyle = "#45484d"; x.lineWidth = 3; x.beginPath(); x.arc(334, 346, 9, .2, Math.PI - .2); x.stroke(); x.beginPath(); x.arc(366, 346, 9, .2, Math.PI - .2); x.stroke();
+    x.fillStyle = "#f2f0ec"; x.beginPath(); x.ellipse(330, 398, 18, 10, 0, 0, 7); x.ellipse(372, 396, 18, 10, 0, 0, 7); x.fill();
+    x.strokeStyle = "rgba(70,72,78,.5)"; x.lineWidth = 6; for (let k = 0; k < 5; k++) { x.beginPath(); x.moveTo(180 + k * 28, 322); x.quadraticCurveTo(188 + k * 28, 360, 182 + k * 28, 400); x.stroke(); }
+    if (p.collar) { x.strokeStyle = "#d33a3a"; x.lineWidth = 7; x.beginPath(); x.arc(350, 345, 44, .9, 2.2); x.stroke(); x.fillStyle = "#f2c230"; x.beginPath(); x.arc(350, 390, 7, 0, 7); x.fill(); }
+    x.filter = "blur(1.2px)"; x.drawImage(c, 0, 0); x.filter = "none";
+  } else if (p.kind === "chairs") { // six folding chairs against a wall
+    x.fillStyle = lg(0, H * .7, ["#d8c9b2", "#b8a68c"]); x.fillRect(0, 0, W, H);
+    x.fillStyle = "#e8e2d8"; x.fillRect(40, 60, 120, 150); x.fillStyle = "#c9b48e"; x.fillRect(48, 68, 104, 134);
+    x.fillStyle = lg(H * .7, H, ["#8a6a4a", "#5e4630"]); x.fillRect(0, H * .7, W, H * .3);
+    x.strokeStyle = "rgba(0,0,0,.18)"; x.lineWidth = 2; for (let k = 0; k < 8; k++) { x.beginPath(); x.moveTo(0, H * .7 + k * 24); x.lineTo(W, H * .7 + k * 24); x.stroke(); }
+    for (let k = 0; k < 6; k++) {
+      x.save(); x.translate(70 + k * 62, H * .44); x.rotate(-.12 + k * .01);
+      x.fillStyle = "rgba(0,0,0,.18)"; x.fillRect(10, 10, 70, 260);
+      x.fillStyle = ["#d7b787", "#dcbd8f", "#d2b07e"][k % 3]; x.fillRect(0, 0, 70, 24); x.fillRect(0, 44, 70, 16); x.fillRect(4, 0, 9, 250); x.fillRect(57, 0, 9, 250); x.fillRect(0, 140, 70, 14);
+      x.strokeStyle = "rgba(90,60,30,.4)"; x.strokeRect(0, 0, 70, 24); x.restore();
+    }
+    x.fillStyle = "rgba(255,240,215,.18)"; x.fillRect(0, 0, W, H);
+  } else if (p.kind === "receipt") { // a till receipt on the counter
+    x.fillStyle = "#26272b"; x.fillRect(0, 0, W, H);
+    x.fillStyle = "#1b1c1f"; for (let k = 0; k < 14; k++) x.fillRect(0, k * 46, W, 22);
+    x.save(); x.translate(W / 2, H / 2); x.rotate(.06);
+    x.shadowColor = "rgba(0,0,0,.5)"; x.shadowBlur = 20; x.fillStyle = "#f4f3ee"; x.fillRect(-140, -270, 280, 540); x.shadowBlur = 0;
+    x.fillStyle = "#333"; x.font = "bold 17px monospace"; x.textAlign = "center"; x.fillText("WALKINSTOWN", 0, -230); x.font = "13px monospace"; x.fillText("TILL 03  OP: TOM", 0, -208);
+    x.textAlign = "left"; x.font = "14px monospace";
+    [["NAPPIES SZ 4", "9.99"], ["BABY FORMULA", "12.49"], ["BREAD WHITE", "1.65"], ["MILK 2L", "2.29"], ["BANANAS", "1.20"], ["CHICKEN FILLETS", "5.80"], ["BEANS 4PK", "3.19"], ["", ""], ["TOTAL", "36.61"], ["CARD ****8812", "25.21"], ["CARD ****3301", "11.40"]].forEach(([a, b2], k) => { x.fillText(a, -122, -170 + k * 26); x.textAlign = "right"; x.fillText(b2, 122, -170 + k * 26); x.textAlign = "left"; });
+    x.fillText("--------------------------", -122, 128); x.textAlign = "center"; x.fillText("THANK YOU", 0, 160); x.fillText("PLEASE CALL AGAIN", 0, 184);
+    x.restore();
+  } else if (p.kind === "table") { // Christmas Eve table from above: three plates, two of them empty
+    x.fillStyle = "#1c130d"; x.fillRect(0, 0, W, H);
+    x.fillStyle = "#f2efe8"; x.fillRect(30, 40, W - 60, H - 80);
+    x.strokeStyle = "#d7b45a"; x.lineWidth = 2.2; for (let k = 0; k < 26; k++) { const ex = r() > .5, px2 = ex ? 30 + r() * (W - 60) : (r() > .5 ? 30 : W - 30), py2 = ex ? (r() > .5 ? 40 : H - 40) : 40 + r() * (H - 80); x.beginPath(); x.moveTo(px2, py2); x.lineTo(px2 + (r() - .5) * 40, py2 + (r() - .5) * 40); x.stroke(); }
+    const plate = (px2, py2, food) => { x.fillStyle = "rgba(0,0,0,.12)"; x.beginPath(); x.arc(px2 + 4, py2 + 6, 70, 0, 7); x.fill(); x.fillStyle = "#fff"; x.beginPath(); x.arc(px2, py2, 70, 0, 7); x.fill(); x.strokeStyle = "#cfd6de"; x.lineWidth = 3; x.beginPath(); x.arc(px2, py2, 52, 0, 7); x.stroke();
+      if (food) { x.fillStyle = "#efe0bd"; for (let k = 0; k < 5; k++) { x.beginPath(); x.ellipse(px2 - 28 + (k % 3) * 26, py2 - 10 + Math.floor(k / 3) * 26, 18, 11, r() * 3, 0, Math.PI); x.fill(); } x.fillStyle = "#7a1f2c"; x.beginPath(); x.arc(px2 + 100, py2 - 40, 30, 0, 7); x.fill(); x.fillStyle = "#fff"; x.beginPath(); x.arc(px2 + 100, py2 - 40, 34, 0, 7); x.lineWidth = 6; x.strokeStyle = "#fff"; x.stroke(); } };
+    plate(150, 170, true); plate(330, 300, false); plate(150, 440, false);
+    x.fillStyle = "#e9dfcc"; x.fillRect(300, 120, 70, 44);
+    x.fillStyle = "rgba(255,190,90,.35)"; x.filter = "blur(30px)"; x.beginPath(); x.arc(370, 470, 80, 0, 7); x.fill(); x.filter = "none";
+    x.fillStyle = "#efe7d2"; x.beginPath(); x.arc(370, 470, 22, 0, 7); x.fill(); x.fillStyle = "#ffcf6a"; x.beginPath(); x.arc(370, 470, 6, 0, 7); x.fill();
+    const v = x.createRadialGradient(W / 2, H / 2, H * .25, W / 2, H / 2, H * .7); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(20,10,0,.6)"); x.fillStyle = v; x.fillRect(0, 0, W, H);
+  } else if (p.kind === "cranes") { // shipyard cranes at sunset
+    x.fillStyle = lg(0, H * .62, ["#2c2346", "#9b4d5a", "#f08c4a", "#f7c46c"]); x.fillRect(0, 0, W, H);
+    x.fillStyle = lg(H * .62, H, ["#3b2a2e", "#120f14"]); x.fillRect(0, H * .62, W, H * .38);
+    x.fillStyle = "rgba(247,180,100,.35)"; for (let k = 0; k < 40; k++) x.fillRect(W * .3 + r() * W * .4, H * .64 + r() * H * .3, 30 + r() * 40, 2);
+    x.strokeStyle = "#141018"; x.fillStyle = "#141018"; x.lineWidth = 6;
+    [[110, 1], [270, 1.25], [410, .9]].forEach(([cx, k]) => { const top = H * .62 - 260 * k; x.fillRect(cx - 8, top, 16, H * .62 - top); x.beginPath(); x.moveTo(cx - 90 * k, top + 10); x.lineTo(cx + 140 * k, top + 10); x.stroke(); x.beginPath(); x.moveTo(cx, top - 40 * k); x.lineTo(cx - 90 * k, top + 10); x.moveTo(cx, top - 40 * k); x.lineTo(cx + 140 * k, top + 10); x.lineWidth = 2.5; x.stroke(); x.lineWidth = 6; x.beginPath(); x.moveTo(cx + 110 * k, top + 10); x.lineTo(cx + 110 * k, top + 90 * k); x.lineWidth = 1.5; x.stroke(); x.lineWidth = 6; });
+    x.fillRect(0, H * .58, W, H * .045);
+  } else if (p.kind === "airport") { // arrivals hall, grey March light
+    x.fillStyle = "#2a2d33"; x.fillRect(0, 0, W, H);
+    x.fillStyle = lg(60, 330, ["#c9d0d8", "#9aa4ae"]); x.fillRect(20, 60, W - 40, 270);
+    x.strokeStyle = "#2a2d33"; x.lineWidth = 8; for (let k = 1; k < 6; k++) { x.beginPath(); x.moveTo(20 + k * (W - 40) / 6, 60); x.lineTo(20 + k * (W - 40) / 6, 330); x.stroke(); }
+    x.fillStyle = "#101114"; x.fillRect(60, 110, 240, 120); x.fillStyle = "#ffb43a"; x.font = "bold 14px monospace"; x.fillText("ARRIVALS", 72, 132); x.font = "12px monospace";
+    ["GDN  13:05  LANDED", "LHR  13:20  LANDED", "AMS  13:40  EXP 13:52", "WAW  14:10  ON TIME"].forEach((t, k) => x.fillText(t, 72, 156 + k * 20));
+    x.fillStyle = lg(330, H, ["#8b8f96", "#55595f"]); x.fillRect(0, 330, W, H - 330);
+    x.filter = "blur(4px)"; x.fillStyle = "#1e2026";
+    [[200, 1], [290, .92]].forEach(([cx, k]) => { x.beginPath(); x.arc(cx, 380, 22 * k, 0, 7); x.fill(); x.beginPath(); x.moveTo(cx - 38 * k, 560); x.quadraticCurveTo(cx - 40 * k, 405, cx, 404); x.quadraticCurveTo(cx + 40 * k, 405, cx + 38 * k, 560); x.fill(); });
+    x.fillStyle = "#6a2b2b"; x.fillRect(118, 470, 50, 80); x.fillStyle = "#2e4a6a"; x.fillRect(332, 480, 46, 70); x.filter = "none";
+  } else if (p.kind === "stage") { // an opera chorus under warm lights, 1999 film colours
+    x.fillStyle = "#0b0807"; x.fillRect(0, 0, W, H);
+    [[120, "rgba(255,206,140,.85)"], [360, "rgba(255,180,120,.8)"], [240, "rgba(255,230,190,.5)"]].forEach(([cx, col]) => { const g = x.createRadialGradient(cx, 300, 10, cx, 330, 280); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = g; x.fillRect(0, 0, W, H); });
+    x.fillStyle = lg(470, H, ["#7a4a2c", "#2a1a10"]); x.fillRect(0, 470, W, 130);
+    x.filter = "blur(3px)";
+    for (let row = 0; row < 2; row++) for (let k = 0; k < 7; k++) { const cx = 40 + k * 66 + row * 30, base = 470 - row * 24, sc = row ? .82 : 1; x.fillStyle = row ? "#3a2418" : "#4a2c1a"; x.beginPath(); x.moveTo(cx - 36 * sc, base + 10); x.fillStyle = row ? "#3a2418" : "#4a2c1a"; x.fillStyle = "#d9a77c"; x.beginPath(); x.arc(cx, base - 150 * sc, 20 * sc, 0, 7); x.fill(); x.fillStyle = row ? "#3a2418" : "#5a3420"; x.beginPath(); x.moveTo(cx - 36 * sc, base + 10); x.quadraticCurveTo(cx - 36 * sc, base - 124 * sc, cx, base - 126 * sc); x.quadraticCurveTo(cx + 36 * sc, base - 124 * sc, cx + 36 * sc, base + 10); x.fill(); }
+    x.filter = "none";
+    x.fillStyle = "rgba(250,220,170,.08)"; x.fillRect(0, 0, W, H);
+  } else if (p.kind === "aisle") { // an empty supermarket aisle before opening
+    x.fillStyle = "#1d2126"; x.fillRect(0, 0, W, H);
+    const vx = W / 2, vy = H * .42;
+    x.fillStyle = "#c9ccd0"; for (let k = 0; k < 4; k++) { const y = 20 + k * 30; x.globalAlpha = .9 - k * .2; x.fillRect(vx - 120 + k * 26, y, 240 - k * 52, 8); } x.globalAlpha = 1;
+    x.fillStyle = lg(vy, H, ["#3b4047", "#8d9399"]); x.beginPath(); x.moveTo(vx - 20, vy); x.lineTo(vx + 20, vy); x.lineTo(W, H); x.lineTo(0, H); x.fill();
+    const side = dir => { for (let sh = 0; sh < 6; sh++) { const y0 = 60 + sh * 70; for (let k = 0; k < 14; k++) { const t0 = k / 14, t1 = (k + 1) / 14, xa = dir < 0 ? t0 * (vx - 30) : W - t0 * (W - vx - 30), xb = dir < 0 ? t1 * (vx - 30) : W - t1 * (W - vx - 30), ya = y0 + (vy - y0) * t0 * .9, yb = y0 + (vy - y0) * t1 * .9, h0 = 50 * (1 - t0 * .85); x.fillStyle = `hsl(${Math.floor(r() * 360)},${40 + r() * 30}%,${35 + r() * 25}%)`; x.fillRect(Math.min(xa, xb), Math.min(ya, yb), Math.abs(xb - xa) + 1, h0); } } };
+    side(-1); side(1);
+    x.fillStyle = "rgba(20,24,30,.35)"; x.fillRect(0, 0, W, H);
+    x.filter = "blur(2px)"; x.fillStyle = "#1c2a44"; x.beginPath(); x.arc(vx + 6, 318, 12, 0, 7); x.fill(); x.beginPath(); x.moveTo(vx - 16, 400); x.quadraticCurveTo(vx - 16, 333, vx + 6, 332); x.quadraticCurveTo(vx + 28, 333, vx + 28, 400); x.fill(); x.fillRect(vx - 10, 398, 10, 22); x.fillRect(vx + 12, 398, 10, 22); x.filter = "none";
   } else { // people: faceless, soft-focus silhouettes
     x.fillStyle = lg(0, H, [pal[0], pal[1]]); x.fillRect(0, 0, W, H);
     x.filter = "blur(26px)"; for (let i = 0; i < 6; i++) { x.fillStyle = `rgba(255,255,255,${.08 + r() * .15})`; x.beginPath(); x.arc(r() * W, r() * H * .6, 40 + r() * 90, 0, 7); x.fill(); } x.filter = "blur(5px)";
@@ -1283,7 +1714,7 @@ function notifHTML(n, cls = "") {
 }
 function renderLock() {
   const L = $("#lock");
-  L.innerHTML = `<div class="wall" style="background:${S.wallpaper.lock}"></div>
+  L.innerHTML = `<div class="wall" style="background:${S.wallpaper.lockPhoto ? `linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.2) 35%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.6) 100%), url(${photoURL(S.wallpaper.lockPhoto)}) center/cover` : S.wallpaper.lock}"></div>
     <div class="lk-date" id="lkDate">${esc(dayLabel(0, { weekday: "long", day: "numeric", month: "long" }))}</div>
     <div class="lk-time" id="lkTime">${curTime()}</div>
     ${st.lost ? `<div class="lost"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><b>${esc(S.lostMode.title)}</b><span>${esc(S.lostMode.body)}</span></div>` : lockWeather()}
@@ -1376,7 +1807,7 @@ const APPS = {
       const draft = c.draft && !st.sent ? c.draft : "";
       return `<div class="view thread">${nav("", { back: "" }).replace('<div class="ttl"></div>', `<div class="av sm" style="background:${c.color}">${esc(c.initials)}</div><div class="ttl">${esc(c.name)}<small>${esc(st.typing === c.id ? "typing…" : c.sub)}</small></div>`)}
         <div class="msgs">${html}</div>
-        ${draft ? `<div class="draft-hint">Unsent draft. She wrote this at 02:33 and never pressed send.</div>` : ""}
+        ${draft ? `<div class="draft-hint">${esc(c.draftNote || PR().Sub + " wrote this and never pressed send.")}</div>` : ""}
         <div class="composer"><div class="field ${draft ? "has" : ""}">${draft ? esc(draft) : "Message"}</div>
         ${draft ? `<button class="snd go" data-act="sendDraft" data-id="${c.id}" aria-label="Send">${G.send}</button>` : `<span class="snd">${G.mic}</span>`}</div></div>`;
     }
@@ -1404,6 +1835,7 @@ const APPS = {
       }).join("");
       return `<div class="view">${navRoot("Voicemail")}<div class="scroll" style="padding-top:0"><div class="group">${rows}</div></div>${tabbar}</div>`;
     }
+    discover(D.phone.discover);
     const rows = D.phone.recents.map(r => `<div class="row"><span style="flex:1;min-width:0"><span class="nm ${r.miss || r.newMiss ? "miss" : ""}">${esc(r.name)}</span><br><span class="sub">${esc(r.kind)} · ${esc(r.dur)}</span></span><span class="rt">${esc(r.when)} ${G.info}</span></div>`).join("");
     D.phone.recents.forEach(r => delete r.newMiss);
     return `<div class="view"><div class="nav" style="min-height:62px;padding-bottom:0"><span style="color:#0a84ff">Edit</span><div class="seg"><button class="on">All</button><button>Missed</button></div><span style="width:30px"></span></div><div class="big">Recents</div><div class="scroll rec" style="padding-top:0"><div class="group">${rows}</div></div>${tabbar}</div>`;
@@ -1413,11 +1845,11 @@ const APPS = {
     const HA = D.hiddenAlbum;
     if (view === "hidden") {
       if (!st.hiddenOpen) return `<div class="view">${nav("Hidden", { back: "Albums" })}<div class="lockpad">${G.lock}<h3>Hidden album</h3>
-        <p>She locked this album with a word, not a passcode.<br>Hint: ${esc(HA.hint)}</p>
+        <p>${PR().Sub} locked this album with a word, not a passcode.<br>Hint: ${esc(HA.hint)}</p>
         <div class="clue" id="clueBox"><div class="clue-q">${esc(HA.clue)}</div>
         <input id="clueIn" class="clue-in" maxlength="${HA.answer.length}" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Answer" placeholder="${"_".repeat(HA.answer.length)}">
         <button class="clue-go" data-act="clueGo">Unlock</button><div class="clue-msg" id="clueMsg"></div></div></div></div>`;
-      return `<div class="view">${nav("Hidden", { back: "Albums" })}<div class="scroll" style="padding-top:0"><div class="pgrid">${HA.items.map(p => `<button data-act="photo" data-id="${p.id}" aria-label="${esc(p.caption)}"><img alt="" src="${photoURL(p.id)}"></button>`).join("")}</div></div></div>`;
+      return `<div class="view">${nav("Hidden", { back: "Albums" })}<div class="scroll" style="padding-top:0"><div class="pgrid">${HA.items.map(p => `<button data-act="photo" data-id="${p.id}" aria-label="${esc(p.caption)}"><img alt="" src="${photoURL(p.id)}">${p.vdur ? `<span class="vd">▶ ${esc(p.vdur)}</span>` : ""}</button>`).join("")}</div></div></div>`;
     }
     if (view === "view") {
       const list = D.photos.some(p => p.id === id) ? D.photos : HA.items;
@@ -1436,7 +1868,7 @@ const APPS = {
   notes(view, id) {
     if (view === "lock") {
       const n = D.notes.find(x => x.id === id);
-      return `<div class="view notes">${nav("", { back: "Notes" })}<div class="lockpad">${G.lock}<h3>This note is locked</h3><p>Enter the passcode for “${esc(n.title)}”.<br>Her hint: ${esc(n.hint)}</p>
+      return `<div class="view notes">${nav("", { back: "Notes" })}<div class="lockpad">${G.lock}<h3>This note is locked</h3><p>Enter the passcode for “${esc(n.title)}”.<br>${PR().Pos} hint: ${esc(n.hint)}</p>
         <div class="pins" id="pins">${[0,1,2,3].map(k => `<i class="${k < st.pin.length ? "f" : ""}"></i>`).join("")}</div>
         <div class="keys">${[1,2,3,4,5,6,7,8,9].map(k => `<button data-act="pin" data-k="${k}">${k}</button>`).join("")}<span></span><button data-act="pin" data-k="0">0</button><button class="ghost" data-act="pin" data-k="del">Delete</button></div></div></div>`;
     }
@@ -1504,13 +1936,13 @@ const APPS = {
 
   health() {
     const Hh = D.health; discover(Hh.discover);
-    const max = Math.max(...Hh.night);
+    const max = Math.max(...Hh.night), late = Hh.late === null ? [-1, -1] : (Hh.late || [1, 4]);
     return `<div class="view">${navRoot("Summary")}<div class="scroll health" style="padding-top:0">
       <div class="sect">Pinned</div>
       <div class="group"><div class="hrow"><span class="hk" style="color:#ff6b35">🔥 Steps</span><span class="hv">${esc(Hh.steps)}<small> steps</small></span><span class="sub">Today · ${esc(Hh.distance)}</span></div>
       <div class="hrow"><span class="hk" style="color:#5ac8fa">🛏 Sleep</span><span class="hv">${esc(Hh.sleep)}<small> last night</small></span><span class="sub">7-day average ${esc(Hh.sleepAvg)}</span></div></div>
       <div class="sect">Steps by hour · last 24 hours</div>
-      <div class="group hchart"><div class="hbars">${Hh.night.map((v, k) => `<i style="height:${v ? Math.max(4, (v / max) * 100) : 1.5}%" class="${k >= 1 && k <= 4 ? "late" : ""}"></i>`).join("")}</div>
+      <div class="group hchart"><div class="hbars">${Hh.night.map((v, k) => `<i style="height:${v ? Math.max(4, (v / max) * 100) : 1.5}%" class="${k >= late[0] && k <= late[1] ? "late" : ""}"></i>`).join("")}</div>
       <div class="hlabels">${Hh.labels.map(l => `<span>${esc(l)}</span>`).join("")}</div></div>
       <div class="sect">Highlights</div>
       <div class="group"><div class="hrow hl"><span class="hk" style="color:#ff6b35">Activity</span><span>${esc(Hh.highlight)}</span></div><div class="hrow hl"><span class="hk" style="color:#5ac8fa">Sleep</span><span>${esc(Hh.sleepNote)}</span></div></div>
@@ -1545,7 +1977,7 @@ const APPS = {
       <div class="sect"></div><div class="group">${row("#ff3b30","Notifications","",ic.bell)}${row("#8e8e93","General","",ic.gen)}${row("#8e8e93","Name",esc(s.device),ic.gen)}</div>
       <div class="sect">Screen Time · This week</div>
       <div class="stbar"><div class="big2">${esc(s.screenTime.avg)}</div><small>Daily average, ${esc(s.screenTime.change)}</small>
-      <div class="bars">${s.screenTime.bars.map((b, i) => `<i class="${i >= 4 ? "night" : ""}" style="height:${(b / max) * 100}%" title="${days[i]}"></i>`).join("")}</div>
+      <div class="bars">${s.screenTime.bars.map((b, i) => `<i class="${i >= (s.screenTime.hiFrom ?? 4) ? "night" : ""}" style="height:${(b / max) * 100}%" title="${days[i]}"></i>`).join("")}</div>
       <small>${esc(s.screenTime.note)}</small></div></div></div>`;
   }
 };
@@ -1636,7 +2068,7 @@ function acceptCall() {
   const who = esc(ev.speaker || ev.name.replace(/\s\S+$/u, ""));
   const next = () => {
     if (!st.inCall) return;
-    if (i >= ev.captions.length) { const p = document.createElement("p"); p.innerHTML = "<small>Call ended</small>She hung up."; caps.appendChild(p); st.callTO = setTimeout(() => endCall(true), 2200); return; }
+    if (i >= ev.captions.length) { const p = document.createElement("p"); p.innerHTML = "<small>Call ended</small>" + PR().Sub + " hung up."; caps.appendChild(p); st.callTO = setTimeout(() => endCall(true), 2200); return; }
     const p = document.createElement("p"); p.innerHTML = `<small>${who}</small>${esc(ev.captions[i])}`; caps.appendChild(p);
     const src = ev.audio && ev.audio[i]; i++;
     if (src) playClip(src, { onEnd: () => { st.callTO = setTimeout(next, 450); }, onFail: () => { st.callTO = setTimeout(next, 2600); } });
@@ -1701,7 +2133,7 @@ function sendDraft(id) {
   c.afterSend.forEach((r, k) => {
     delay += r.wait;
     setTimeout(() => { st.typing = c.id; if (isViewing(c.id)) renderApp(); }, delay - 1100);
-    setTimeout(() => { st.typing = null; c.messages.push({ d: "Today", from: "them", t: curTime(), text: r.text }); if (isViewing(c.id)) renderApp(); else { c.unread = (c.unread || 0) + 1; showBanner({ app: "chats", title: c.name, body: r.text, time: "now", open: ["chats", "thread", c.id] }); refresh(c.id); } }, delay);
+    setTimeout(() => { st.typing = null; c.messages.push({ d: "Today", from: r.from || "them", t: curTime(), text: r.text }); if (isViewing(c.id)) renderApp(); else { c.unread = (c.unread || 0) + 1; showBanner({ app: "chats", title: c.name, body: (r.from ? r.from + ": " : "") + r.text, time: "now", open: ["chats", "thread", c.id] }); refresh(c.id); } }, delay);
   });
 }
 const isViewing = id => { const t = st.stack[st.stack.length - 1]; return t && t.view === "thread" && t.param === id && $("#app").classList.contains("open"); };
@@ -1715,7 +2147,7 @@ function toggleMusic() {
   renderApp(true);
 }
 
-/* ---------- camera (no real camera: the viewfinder shows the view from her table) ---------- */
+/* ---------- camera (no real camera: the viewfinder shows a photo from the owner's spot) ---------- */
 function shutterSound() {
   if (!actx) return;
   try {
@@ -1754,7 +2186,7 @@ function checkClue() {
   const inp = $("#clueIn"), msg = $("#clueMsg"); if (!inp) return;
   const v = inp.value.toUpperCase().replace(/[^A-Z]/g, "");
   if (v === D.hiddenAlbum.answer) { st.hiddenOpen = true; tone([[880, .06], [1175, .1]], .05); renderApp(); }
-  else { tone([[220, .15]], .06); const b = $("#clueBox"); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); msg.textContent = v.length < D.hiddenAlbum.answer.length ? "Not enough letters." : "Not quite. Where does Aoife live?"; }
+  else { tone([[220, .15]], .06); const b = $("#clueBox"); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); msg.textContent = v.length < D.hiddenAlbum.answer.length ? "Not enough letters." : (D.hiddenAlbum.wrong || "Not quite."); }
 }
 
 /* ---------- click handling ---------- */
@@ -1877,7 +2309,7 @@ function fit() {
 /* ---------- intro + reveal ---------- */
 function showIntro() {
   const I = S.intro, el = $("#intro");
-  el.innerHTML = `<div class="ov-in"><span class="kicker">${esc(I.kicker)}</span><h1>${esc(I.title)}</h1>${I.paras.map(p => `<p>${esc(p)}</p>`).join("")}${I.dim ? `<p class="dim">${esc(I.dim)}</p>` : ""}<div class="sound-tip" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span><b>Sound on.</b> Switch off silent mode and turn your volume up. Calls ring and messages buzz while you're holding her phone.</span></div><button class="cta" id="pickup">${esc(I.button)} →</button></div>`;
+  el.innerHTML = `<div class="ov-in"><span class="kicker">${esc(I.kicker)}</span><h1>${esc(I.title)}</h1>${I.paras.map(p => `<p>${esc(p)}</p>`).join("")}${I.dim ? `<p class="dim">${esc(I.dim)}</p>` : ""}<div class="sound-tip" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span><b>Sound on.</b> Switch off silent mode and turn your volume up. Calls ring and messages buzz while you're holding ${PR().pos} phone.</span></div><button class="cta" id="pickup">${esc(I.button)} →</button></div>`;
   el.hidden = false;
   $("#pickup").addEventListener("click", () => {
     try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume(); } catch (e) { actx = null; }
@@ -1900,10 +2332,10 @@ function showReveal() {
     <p class="who">${esc(R.who)}</p>
     ${st.lost && R.returnLine ? `<p class="ending" style="font-size:24px !important;margin-top:-4px">${esc(R.returnLine)}</p>` : ""}
     ${R.paras.map(p => `<p>${esc(p)}</p>`).join("")}
-    ${st.found.has("letter") && R.letterLine ? `<p>${esc(R.letterLine)}</p>` : ""}
+    ${st.found.has(R.letterKey || "letter") && R.letterLine ? `<p>${esc(R.letterLine)}</p>` : ""}
     <ul class="foundlist">${ids.map(id => st.found.has(id) ? `<li><i>✓</i>${esc(S.discoveries[id])}</li>` : `<li class="no"><i>○</i>Something you didn't find</li>`).join("")}</ul>
     <p class="ending">${esc(st.sent ? R.endingSent : R.endingUnsent)}</p>
-    <div class="stats" style="grid-template-columns:minmax(0,260px)"><div><b>${esc(spent)}</b><small>you spent in her phone</small></div></div>
+    <div class="stats" style="grid-template-columns:minmax(0,260px)"><div><b>${esc(spent)}</b><small>you spent in ${PR().pos} phone</small></div></div>
     <div class="share">
       <a class="cta" href="https://x.com/intent/post?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank" rel="noopener">Share on X</a>
       <a class="ghostbtn" href="https://wa.me/?text=${encodeURIComponent(text + " " + url)}" target="_blank" rel="noopener">Send on WhatsApp</a>
@@ -1911,7 +2343,7 @@ function showReveal() {
     </div>
     ${subscribeHTML("reveal", "Want the next phone?", "We'll email you once when the next one is left behind.")}
     <div class="closing"><p class="dim" style="margin-bottom:10px">More phones are being left behind</p><div class="more">${others.map(o => `<div>${esc(o.title)}<small>Coming soon</small></div>`).join("")}</div></div>
-    <div class="share"><button class="ghostbtn" id="backPhone">← Back to her phone</button><button class="ghostbtn" id="restart">Start over</button><a class="ghostbtn" href="#">All phones</a></div>
+    <div class="share"><button class="ghostbtn" id="backPhone">← Back to ${PR().pos} phone</button><button class="ghostbtn" id="restart">Start over</button><a class="ghostbtn" href="#">All phones</a></div>
   </div>`;
   el.hidden = false; el.scrollTop = 0;
   $("#copyLink").addEventListener("click", async () => {
@@ -1926,6 +2358,7 @@ function showReveal() {
 const SESSIONS = {};
 function resumeStory(id) {
   ({ S, D, st } = SESSIONS[id]);
+  Object.keys(photoCache).forEach(k => delete photoCache[k]);
   $("#hub").hidden = true; $("#exp").hidden = false; $("#reveal").hidden = true; $("#intro").hidden = true;
   $("#side").innerHTML = `<h2>${esc(S.side.title)}</h2><p>${esc(S.side.text)}</p>`;
   renderStatus(); buildTracker(); fit(); renderLock(); renderHome();
